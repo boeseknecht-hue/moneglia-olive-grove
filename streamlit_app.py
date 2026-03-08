@@ -65,8 +65,8 @@ st.markdown(
 # ══════════════════════════════════════════════════════════════════════════════
 # CONSTANTS — Official Visura Catastale data
 # ══════════════════════════════════════════════════════════════════════════════
-MONEGLIA_LAT  = 44.238
-MONEGLIA_LON  = 9.491
+MONEGLIA_LAT  = 44.2445   # Località Crovetta
+MONEGLIA_LON  = 9.4880    # Località Crovetta
 FOGLIO        = "13"
 TOTAL_HA      = 1.3450
 TOTAL_M2      = 13_450
@@ -162,7 +162,7 @@ LANG = {
 
         # Map
         "map_header":     "Interactive Map",
-        "map_caption":    "Map centred on Moneglia (Lat 44.238, Lon 9.491). Zoom in to explore your grove.",
+        "map_caption":    "Map centred on Località Crovetta, Moneglia (Lat 44.2445, Lon 9.4880). Zoom in to explore your grove.",
         "map_grove":      "🫒 Olive Grove — Foglio 13",
         "map_popup":      (
             "<b>🫒 Olive Grove</b><br>"
@@ -244,7 +244,7 @@ LANG = {
 
         # Map
         "map_header":     "Mappa interattiva",
-        "map_caption":    "Mappa centrata su Moneglia (Lat 44.238, Lon 9.491). Usa lo zoom per esplorare l'uliveto.",
+        "map_caption":    "Mappa centrata su Località Crovetta, Moneglia (Lat 44.2445, Lon 9.4880). Usa lo zoom per esplorare l'uliveto.",
         "map_grove":      "🫒 Uliveto — Foglio 13",
         "map_popup":      (
             "<b>🫒 Uliveto</b><br>"
@@ -579,64 +579,203 @@ elif page == T["nav_map"]:
     st.header(f"🗺️ {T['map_header']}")
     st.caption(T["map_caption"])
 
+    # ── Coordinate geometry ───────────────────────────────────────────────────
+    # At lat 44.2445°: 1 m ≈ 0.000008983° lat  |  1 m ≈ 0.000012531° lon
+    # Plots are arranged as adjacent terraced strips running E→W along the
+    # hillside at Località Crovetta.  Widths are proportional to each plot's
+    # actual Visura area (66 m N–S depth for all plots).
+    #
+    #  |← 2671 →|←——— 2675 ———→|←——————— 2677 ———————→|←——— 2679 ———→|
+    #   19 m      55 m            80 m                   50 m
+    #  1 266 m²   3 608 m²        5 302 m²               3 274 m²
+    #
+    # Total width ≈ 204 m  ×  66 m depth  =  13 464 m²  ≈ 1.345 ha ✓
+
+    _LAT_M = 0.000008983   # degrees per metre (latitude)
+    _LON_M = 0.000012531   # degrees per metre (longitude)
+
+    DEPTH_M = 66.0         # N–S depth of all plots (metres)
+    half_d  = DEPTH_M / 2
+
+    # West-edge longitude (102 m west of centre)
+    WEST_LON = MONEGLIA_LON - 102 * _LON_M
+    NORTH_LAT = MONEGLIA_LAT + half_d * _LAT_M
+    SOUTH_LAT = MONEGLIA_LAT - half_d * _LAT_M
+
+    # Each plot's E–W width in metres
+    plot_widths_m = {
+        "2671": 19.0,
+        "2675": 55.0,
+        "2677": 80.0,
+        "2679": 50.0,
+    }
+    plot_colors = {
+        "2671": "#4a7c59",   # dark olive green  (Uliveto)
+        "2675": "#c4a035",   # amber/gold        (Sem Irr Arb)
+        "2677": "#3a6b45",   # deep green        (Uliveto, largest)
+        "2679": "#5e9e72",   # medium green      (Uliveto)
+    }
+    plot_fill = {
+        "2671": "#6aaa7e",
+        "2675": "#f0d080",
+        "2677": "#7ecb96",
+        "2679": "#90d4a8",
+    }
+    plot_qualita = {
+        "2671": "Uliveto",
+        "2675": "Sem Irr Arb",
+        "2677": "Uliveto",
+        "2679": "Uliveto",
+    }
+
+    # Build polygons
+    cursor_lon = WEST_LON
+    plot_centroids = {}
+
     m = folium.Map(
         location=[MONEGLIA_LAT, MONEGLIA_LON],
-        zoom_start=16,
+        zoom_start=18,
         tiles="OpenStreetMap",
     )
 
-    # Satellite layer option
+    # Satellite tile layer
     folium.TileLayer(
-        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        attr="Esri",
-        name="Satellite",
+        tiles=(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/"
+            "World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        ),
+        attr="Esri World Imagery",
+        name="🛰 Satellite",
         overlay=False,
         control=True,
     ).add_to(m)
 
-    # Grove area circle (~207 m radius → 1.345 ha)
-    folium.Circle(
-        location=[MONEGLIA_LAT, MONEGLIA_LON],
-        radius=207,
-        color="#4a7c59",
-        fill=True,
-        fill_color="#6aaa7e",
-        fill_opacity=0.20,
-        tooltip=f"🫒 Grove area ≈ 1.3450 ha",
-        popup=folium.Popup(T["map_popup"], max_width=240),
+    for mappale, width_m in plot_widths_m.items():
+        w_deg = width_m * _LON_M
+        east_lon  = cursor_lon + w_deg
+        mid_lon   = cursor_lon + w_deg / 2
+        mid_lat   = MONEGLIA_LAT
+        plot_centroids[mappale] = (mid_lat, mid_lon)
+
+        area_m2 = {"2671": 1_266, "2675": 3_608, "2677": 5_302, "2679": 3_274}[mappale]
+        qualita = plot_qualita[mappale]
+        trees_txt = (
+            f"~{round((area_m2/10000)*230)} trees"
+            if qualita == "Uliveto" else "arable/mixed"
+        )
+
+        poly_coords = [
+            [NORTH_LAT, cursor_lon],
+            [NORTH_LAT, east_lon],
+            [SOUTH_LAT, east_lon],
+            [SOUTH_LAT, cursor_lon],
+        ]
+
+        popup_html = (
+            f"<b>Mappale {mappale}</b><br>"
+            f"Qualità: {qualita}<br>"
+            f"Area: {area_m2:,} m²  ({area_m2/10000:.4f} ha)<br>"
+            f"Olivi / Trees: {trees_txt}"
+        )
+
+        folium.Polygon(
+            locations=poly_coords,
+            color=plot_colors[mappale],
+            weight=2,
+            fill=True,
+            fill_color=plot_fill[mappale],
+            fill_opacity=0.45,
+            tooltip=f"Mappale {mappale} — {qualita} — {area_m2:,} m²",
+            popup=folium.Popup(popup_html, max_width=220),
+        ).add_to(m)
+
+        # Plot number label as DivIcon
+        folium.Marker(
+            location=[mid_lat, mid_lon],
+            icon=folium.DivIcon(
+                html=(
+                    f'<div style="'
+                    f'font-size:11px;font-weight:bold;color:#1a1a1a;'
+                    f'background:rgba(255,255,255,0.78);'
+                    f'border:1px solid {plot_colors[mappale]};'
+                    f'border-radius:4px;padding:2px 5px;'
+                    f'white-space:nowrap;text-align:center;">'
+                    f'{mappale}<br>'
+                    f'<span style="font-size:9px;font-weight:normal">{area_m2:,} m²</span>'
+                    f'</div>'
+                ),
+                icon_size=(72, 32),
+                icon_anchor=(36, 16),
+            ),
+        ).add_to(m)
+
+        cursor_lon = east_lon  # advance to next plot
+
+    # ── Combined boundary polygon (outline only) ──────────────────────────────
+    EAST_LON = cursor_lon
+    outer_coords = [
+        [NORTH_LAT, WEST_LON],
+        [NORTH_LAT, EAST_LON],
+        [SOUTH_LAT, EAST_LON],
+        [SOUTH_LAT, WEST_LON],
+    ]
+    folium.Polygon(
+        locations=outer_coords,
+        color="#1a4a2e",
+        weight=3,
+        fill=False,
+        tooltip="Foglio 13 — Total grove boundary",
     ).add_to(m)
 
-    # Grove marker
+    # ── Master label marker at centroid ──────────────────────────────────────
+    centre_lon = (WEST_LON + EAST_LON) / 2
     folium.Marker(
-        location=[MONEGLIA_LAT, MONEGLIA_LON],
-        tooltip=T["map_grove"],
-        popup=folium.Popup(T["map_popup"], max_width=240),
-        icon=folium.Icon(color="green", icon="leaf", prefix="fa"),
+        location=[SOUTH_LAT - 0.00018, centre_lon],
+        icon=folium.DivIcon(
+            html=(
+                '<div style="'
+                'font-size:13px;font-weight:bold;color:#1a4a2e;'
+                'background:rgba(255,255,255,0.92);'
+                'border:2px solid #1a4a2e;border-radius:6px;'
+                'padding:5px 10px;white-space:nowrap;text-align:center;'
+                'box-shadow:0 2px 6px rgba(0,0,0,0.2);">'
+                '🫒 Total Area: 1.34 Ha — 310 Olive Trees'
+                '</div>'
+            ),
+            icon_size=(310, 36),
+            icon_anchor=(155, 0),
+        ),
     ).add_to(m)
 
-    # Residence marker (slightly offset)
+    # ── Residence & storage markers (near grove, plausible offset) ───────────
     folium.Marker(
-        location=[MONEGLIA_LAT + 0.0008, MONEGLIA_LON + 0.0008],
+        location=[MONEGLIA_LAT + 0.00045, MONEGLIA_LON - 0.00090],
         tooltip=T["map_residence"],
+        popup=folium.Popup(
+            "<b>🏠 Residenza principale</b><br>Mappale 2670<br>8 vani", max_width=180
+        ),
         icon=folium.Icon(color="red", icon="home", prefix="fa"),
     ).add_to(m)
 
-    # Storage marker
     folium.Marker(
-        location=[MONEGLIA_LAT + 0.0005, MONEGLIA_LON - 0.0007],
+        location=[MONEGLIA_LAT - 0.00035, MONEGLIA_LON - 0.00070],
         tooltip=T["map_storage"],
+        popup=folium.Popup(
+            "<b>🏚 Depositi</b><br>Mappali 2673, 2674<br>116 m² totali", max_width=180
+        ),
         icon=folium.Icon(color="orange", icon="archive", prefix="fa"),
     ).add_to(m)
 
     folium.LayerControl(collapsed=False).add_to(m)
 
-    st_folium(m, width="100%", height=560, returned_objects=[])
+    st_folium(m, width="100%", height=580, returned_objects=[])
 
     st.write("")
-    col_a, col_b, col_c = st.columns(3)
-    col_a.metric("🟢 Grove", "Mappali 2671–2679")
-    col_b.metric("🔴 Residence", "Mappale 2670 · 8 rooms")
-    col_c.metric("🟠 Storage", "Mappali 2673–2674 · 116 m²")
+    col_a, col_b, col_c, col_d = st.columns(4)
+    col_a.metric("📍 Location", "Loc. Crovetta, Moneglia")
+    col_b.metric("🟢 Grove plots", "2671 · 2675 · 2677 · 2679")
+    col_c.metric("🔴 Residence", "Mappale 2670 · 8 rooms")
+    col_d.metric("🟠 Storage", "Mappali 2673–2674 · 116 m²")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
