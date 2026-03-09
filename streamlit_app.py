@@ -229,6 +229,62 @@ LANG = {
         "map_residence":  "🏠 Main Residence (Mappale 2670)",
         "map_storage":    "🏚 Storage (Mappali 2673, 2674)",
 
+        # Harvest Insights
+        "hv_nav":         "Harvest Insights",
+        "hv_header":      "Harvest & Oil Quality Predictor",
+        "hv_subhead":     "Approfondimenti sul Raccolto",
+        "hv_intro":       (
+            "Evidence-based yield and oil quality estimates for **1.3450 ha · 310 trees** "
+            "at Località Crovetta. All figures use official Visura Catastale data combined "
+            "with live weather from OpenWeatherMap."
+        ),
+        "hv_year_type":   "Select Year Type",
+        "hv_carica":      "🌿 Annata di Carica (High-yield year)",
+        "hv_scarica":     "🍂 Annata di Scarica (Low-yield year)",
+        "hv_carica_hint": "High-yield cycle: trees produce 15–20 kg olives each.",
+        "hv_scarica_hint":"Low-yield cycle: trees produce 5–8 kg olives each.",
+        "hv_yield_header":"Yield Estimate — 310 Trees",
+        "hv_low_yield":   "Conservative estimate",
+        "hv_high_yield":  "Optimistic estimate",
+        "hv_low_q":       "Low (Quintali)",
+        "hv_high_q":      "High (Quintali)",
+        "hv_low_kg":      "Low (kg)",
+        "hv_high_kg":     "High (kg)",
+        "hv_trees_used":  "Trees counted",
+        "hv_ha_used":     "Grove area",
+        "hv_oil_header":  "Oil Extraction Model",
+        "hv_eff_label":   "Extraction Efficiency (standard Moneglia range: 14 %–17 %)",
+        "hv_eff_hint":    "Drag to set the press extraction rate.",
+        "hv_oil_low":     "Predicted EVOO — Low yield",
+        "hv_oil_high":    "Predicted EVOO — High yield",
+        "hv_oil_bottles": "0.75 L bottles equivalent",
+        "hv_quality_header": "Water Content & Oil Quality Alert",
+        "hv_rain_high_alert": (
+            "🌧️  High water content in fruit. Oil may be milder with lower shelf life. "
+            "Pick as soon as weather clears."
+        ),
+        "hv_rain_low_note": (
+            "☀️  Water stress may increase polyphenol intensity (peppery taste)."
+        ),
+        "hv_rain_normal":   "🌤️  Rainfall in the forecast window is within normal range for harvest quality.",
+        "hv_rain_src":    "Based on 7-day OWM forecast (free tier). Historical 30-day data requires OWM paid plan.",
+        "hv_rain_7d":     "7-day forecast rain",
+        "hv_demo_rain":   "Demo: showing typical Ligurian late-October rainfall (28 mm / 7 days).",
+        "hv_summary_header": "Full Harvest Summary",
+        "hv_col_scenario":"Scenario",
+        "hv_col_olives_kg":"Olives (kg)",
+        "hv_col_olives_q": "Olives (Quintali)",
+        "hv_col_oil_l":    "EVOO (Litres)",
+        "hv_col_oil_btl":  "Bottles (0.75 L)",
+        "hv_row_carica_lo":"Carica — Conservative",
+        "hv_row_carica_hi":"Carica — Optimistic",
+        "hv_row_scarica_lo":"Scarica — Conservative",
+        "hv_row_scarica_hi":"Scarica — Optimistic",
+        "hv_note":        (
+            "Extraction rate set at selected efficiency %. "
+            "Quintali = 100 kg units. Liguria DOP olive oil benchmark: ~16 % extraction."
+        ),
+
         # Tasks
         "tasks_header":   "Seasonal Task Calendar",
         "tasks_note":     "Track your seasonal olive grove activities. Checkboxes persist during your session.",
@@ -351,6 +407,62 @@ LANG = {
         "map_residence":  "🏠 Residenza principale (Mappale 2670)",
         "map_storage":    "🏚 Depositi (Mappali 2673, 2674)",
 
+        # Harvest Insights
+        "hv_nav":         "Approfondimenti sul Raccolto",
+        "hv_header":      "Previsione Raccolto e Qualità dell'Olio",
+        "hv_subhead":     "Harvest & Oil Quality Predictor",
+        "hv_intro":       (
+            "Stime di resa e qualità dell'olio basate su evidenze per **1,3450 ha · 310 alberi** "
+            "a Località Crovetta. Tutti i dati utilizzano la Visura Catastale ufficiale "
+            "combinata con le previsioni meteo live di OpenWeatherMap."
+        ),
+        "hv_year_type":   "Seleziona il tipo di annata",
+        "hv_carica":      "🌿 Annata di Carica (Anno ad alta resa)",
+        "hv_scarica":     "🍂 Annata di Scarica (Anno a bassa resa)",
+        "hv_carica_hint": "Ciclo di alta resa: ogni albero produce 15–20 kg di olive.",
+        "hv_scarica_hint":"Ciclo di bassa resa: ogni albero produce 5–8 kg di olive.",
+        "hv_yield_header":"Stima della resa — 310 alberi",
+        "hv_low_yield":   "Stima conservativa",
+        "hv_high_yield":  "Stima ottimistica",
+        "hv_low_q":       "Basso (Quintali)",
+        "hv_high_q":      "Alto (Quintali)",
+        "hv_low_kg":      "Basso (kg)",
+        "hv_high_kg":     "Alto (kg)",
+        "hv_trees_used":  "Alberi conteggiati",
+        "hv_ha_used":     "Superficie uliveto",
+        "hv_oil_header":  "Modello di estrazione olio",
+        "hv_eff_label":   "Efficienza di estrazione (standard Moneglia: 14 %–17 %)",
+        "hv_eff_hint":    "Trascina per impostare la resa al frantoio.",
+        "hv_oil_low":     "EVOO previsto — Resa bassa",
+        "hv_oil_high":    "EVOO previsto — Resa alta",
+        "hv_oil_bottles": "Bottiglie da 0,75 L equivalenti",
+        "hv_quality_header": "Contenuto d'acqua & Allerta Qualità Olio",
+        "hv_rain_high_alert": (
+            "🌧️  Alto contenuto di acqua nel frutto. L'olio potrebbe essere più dolce con "
+            "minore conservabilità. Raccogliere appena il tempo lo permette."
+        ),
+        "hv_rain_low_note": (
+            "☀️  Lo stress idrico può aumentare l'intensità dei polifenoli (gusto piccante)."
+        ),
+        "hv_rain_normal":   "🌤️  Le precipitazioni nella finestra di previsione sono nella norma per la qualità del raccolto.",
+        "hv_rain_src":    "Basato sulle previsioni OWM a 7 giorni (piano gratuito). I dati storici a 30 giorni richiedono il piano a pagamento.",
+        "hv_rain_7d":     "Pioggia prevista 7 giorni",
+        "hv_demo_rain":   "Demo: pioggia tipica di fine ottobre ligure (28 mm / 7 giorni).",
+        "hv_summary_header": "Riepilogo completo del raccolto",
+        "hv_col_scenario": "Scenario",
+        "hv_col_olives_kg":"Olive (kg)",
+        "hv_col_olives_q": "Olive (Quintali)",
+        "hv_col_oil_l":    "EVOO (Litri)",
+        "hv_col_oil_btl":  "Bottiglie (0,75 L)",
+        "hv_row_carica_lo":"Carica — Conservativo",
+        "hv_row_carica_hi":"Carica — Ottimistico",
+        "hv_row_scarica_lo":"Scarica — Conservativo",
+        "hv_row_scarica_hi":"Scarica — Ottimistico",
+        "hv_note":        (
+            "Tasso di estrazione impostato all'efficienza selezionata. "
+            "Quintali = unità da 100 kg. Benchmark DOP Liguria: ~16 % di estrazione."
+        ),
+
         # Tasks
         "tasks_header":   "Calendario attività stagionali",
         "tasks_note":     "Tieni traccia delle attività stagionali del tuo uliveto.",
@@ -438,6 +550,7 @@ with st.sidebar:
         T["nav_overview"],
         T["nav_weather"],
         T["bio_nav"],
+        T["hv_nav"],
         T["nav_map"],
         T["nav_tasks"],
     ], key="nav_radio")
@@ -875,6 +988,212 @@ elif page == T["bio_nav"]:
         )
 
     st.caption(T["bio_cost_note"])
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PAGE: HARVEST INSIGHTS
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == T["hv_nav"]:
+
+    st.header(f"🫒 {T['hv_header']}")
+    st.caption(T["hv_subhead"])
+    st.markdown(T["hv_intro"])
+    st.divider()
+
+    # ── Constants ─────────────────────────────────────────────────────────────
+    TREES_HV   = TREE_BASELINE        # 310
+    HA_HV      = TOTAL_HA             # 1.3450
+    # kg per tree per year type
+    CARICA_LO, CARICA_HI   = 15, 20
+    SCARICA_LO, SCARICA_HI = 5,  8
+
+    # ── Re-use cached forecast ────────────────────────────────────────────────
+    api_key_hv = ""
+    try:
+        api_key_hv = st.secrets["OWM_API_KEY"]
+    except Exception:
+        pass
+    if not api_key_hv:
+        api_key_hv = st.session_state.get("owm_key", "")
+
+    forecast_hv = fetch_forecast(api_key_hv) if api_key_hv else None
+
+    # Derive 7-day rainfall total from forecast (proxy for pre-harvest moisture)
+    if forecast_hv:
+        rain_7d = sum(v["rain"] for v in forecast_hv.values())
+        rain_src = "live"
+    else:
+        rain_7d = 28.0   # demo: typical Ligurian late-Oct value
+        rain_src = "demo"
+        st.info(T["hv_demo_rain"])
+
+    # ── Section 1: Year-type selector ─────────────────────────────────────────
+    st.subheader(f"🌿 {T['hv_yield_header']}")
+
+    left_in, right_in = st.columns([1, 2])
+    with left_in:
+        year_type = st.radio(
+            T["hv_year_type"],
+            options=[T["hv_carica"], T["hv_scarica"]],
+            key="hv_year_radio",
+        )
+    with right_in:
+        if year_type == T["hv_carica"]:
+            kg_lo = CARICA_LO * TREES_HV
+            kg_hi = CARICA_HI * TREES_HV
+            st.info(f"ℹ️  {T['hv_carica_hint']}")
+        else:
+            kg_lo = SCARICA_LO * TREES_HV
+            kg_hi = SCARICA_HI * TREES_HV
+            st.info(f"ℹ️  {T['hv_scarica_hint']}")
+
+    q_lo = kg_lo / 100
+    q_hi = kg_hi / 100
+
+    # Metric cards — yield
+    st.write("")
+    m1, m2, m3, m4, m5 = st.columns(5)
+    m1.metric(T["hv_low_kg"],   f"{kg_lo:,} kg")
+    m2.metric(T["hv_high_kg"],  f"{kg_hi:,} kg")
+    m3.metric(T["hv_low_q"],    f"{q_lo:.1f} q")
+    m4.metric(T["hv_high_q"],   f"{q_hi:.1f} q")
+    m5.metric(T["hv_trees_used"] + " / " + T["hv_ha_used"],
+              f"{TREES_HV} / {HA_HV:.4f} ha")
+
+    st.divider()
+
+    # ── Section 2: Oil Extraction Model ──────────────────────────────────────
+    st.subheader(f"🫙 {T['hv_oil_header']}")
+    st.caption(T["hv_eff_hint"])
+
+    eff_pct = st.slider(
+        T["hv_eff_label"],
+        min_value=14,
+        max_value=17,
+        value=16,
+        step=1,
+        format="%d %%",
+        key="hv_eff_slider",
+    )
+    eff = eff_pct / 100
+
+    oil_lo = round(kg_lo * eff, 1)
+    oil_hi = round(kg_hi * eff, 1)
+    btl_lo = int(oil_lo / 0.75)
+    btl_hi = int(oil_hi / 0.75)
+
+    st.write("")
+    o1, o2, o3, o4 = st.columns(4)
+    o1.metric(T["hv_oil_low"],     f"{oil_lo:,} L")
+    o2.metric(T["hv_oil_high"],    f"{oil_hi:,} L")
+    o3.metric(T["hv_oil_bottles"] + " (low)",  f"~{btl_lo:,} btl")
+    o4.metric(T["hv_oil_bottles"] + " (high)", f"~{btl_hi:,} btl")
+
+    # Visual extraction funnel bar
+    st.markdown(
+        f'<div style="margin:14px 0 4px 0;font-size:0.82rem;color:#555;">'
+        f'Extraction efficiency: <strong>{eff_pct} %</strong></div>'
+        f'<div style="background:#e9ecef;border-radius:20px;height:22px;overflow:hidden;">'
+        f'<div style="width:{((eff_pct-14)/3)*100:.0f}%;background:#4a7c59;'
+        f'height:100%;border-radius:20px;display:flex;align-items:center;'
+        f'padding-left:10px;color:white;font-size:0.78rem;font-weight:700;">'
+        f'&nbsp;{eff_pct} %</div></div>',
+        unsafe_allow_html=True,
+    )
+
+    st.divider()
+
+    # ── Section 3: Water Content & Quality Alert ──────────────────────────────
+    st.subheader(f"💧 {T['hv_quality_header']}")
+
+    qcol_a, qcol_b = st.columns([2, 1])
+    with qcol_b:
+        src_label = "🔴 Live OWM" if rain_src == "live" else "⚪ Demo"
+        st.metric(T["hv_rain_7d"], f"{rain_7d:.1f} mm")
+        st.caption(src_label)
+        st.caption(T["hv_rain_src"])
+
+    with qcol_a:
+        # Thresholds: >100 mm / 2 weeks → user asked for 2-week figure;
+        # our 7-day proxy: >50 mm in 7 days ≈ >100 mm in 14 days
+        RAIN_HIGH_7D = 50.0   # mm threshold over 7 days
+        RAIN_LOW_7D  = 10.0   # mm threshold for dry / stress
+
+        if rain_7d > RAIN_HIGH_7D:
+            st.markdown(
+                f'<div class="alert-box harvest-wait">'
+                f'<strong>EN:</strong> {T["hv_rain_high_alert"]}<br><br>'
+                f'<strong>IT:</strong> {LANG["it"]["hv_rain_high_alert"]}'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+        elif rain_7d < RAIN_LOW_7D:
+            st.markdown(
+                f'<div class="alert-box frost-alert">'
+                f'<strong>EN:</strong> {T["hv_rain_low_note"]}<br><br>'
+                f'<strong>IT:</strong> {LANG["it"]["hv_rain_low_note"]}'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f'<div class="alert-box harvest-open">'
+                f'{T["hv_rain_normal"]}'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+
+    st.divider()
+
+    # ── Section 4: Full bilingual summary table ───────────────────────────────
+    st.subheader(f"📊 {T['hv_summary_header']}")
+
+    def _row(label, kg, eff_r):
+        oil = round(kg * eff_r, 1)
+        return {
+            T["hv_col_scenario"]:  label,
+            T["hv_col_olives_kg"]: f"{kg:,}",
+            T["hv_col_olives_q"]:  f"{kg/100:.1f}",
+            T["hv_col_oil_l"]:     f"{oil:,}",
+            T["hv_col_oil_btl"]:   f"{int(oil/0.75):,}",
+        }
+
+    summary_rows = [
+        _row(T["hv_row_carica_lo"],  CARICA_LO  * TREES_HV, eff),
+        _row(T["hv_row_carica_hi"],  CARICA_HI  * TREES_HV, eff),
+        _row(T["hv_row_scarica_lo"], SCARICA_LO * TREES_HV, eff),
+        _row(T["hv_row_scarica_hi"], SCARICA_HI * TREES_HV, eff),
+    ]
+
+    # Highlight the active selection
+    active_lo = T["hv_row_carica_lo"]  if year_type == T["hv_carica"] else T["hv_row_scarica_lo"]
+    active_hi = T["hv_row_carica_hi"]  if year_type == T["hv_carica"] else T["hv_row_scarica_hi"]
+
+    import pandas as pd
+    df_summary = pd.DataFrame(summary_rows)
+    st.dataframe(
+        df_summary,
+        hide_index=True,
+        use_container_width=True,
+        column_config={
+            T["hv_col_scenario"]:  st.column_config.TextColumn(width="medium"),
+            T["hv_col_olives_kg"]: st.column_config.TextColumn(width="small"),
+            T["hv_col_olives_q"]:  st.column_config.TextColumn(width="small"),
+            T["hv_col_oil_l"]:     st.column_config.TextColumn(width="small"),
+            T["hv_col_oil_btl"]:   st.column_config.TextColumn(width="small"),
+        },
+    )
+
+    st.caption(f"⚙️  {T['hv_note']}  |  Extraction rate: **{eff_pct} %**")
+
+    # Quick callout for currently selected scenario
+    st.success(
+        f"**{'Current selection' if lang=='en' else 'Selezione attuale'}: "
+        f"{'Carica' if year_type==T['hv_carica'] else 'Scarica'} @ {eff_pct} % extraction** — "
+        f"{kg_lo:,}–{kg_hi:,} kg olives → "
+        f"**{oil_lo:,}–{oil_hi:,} L EVOO** "
+        f"(~{btl_lo:,}–{btl_hi:,} {'bottles' if lang=='en' else 'bottiglie'})"
+    )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
