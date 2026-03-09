@@ -55,6 +55,21 @@ st.markdown(
         .frost-alert  { background:#fff3cd; border-left:5px solid #f0a500; color:#7a4f00; }
         .harvest-open { background:#d4edda; border-left:5px solid #28a745; color:#155724; }
         .harvest-wait { background:#f8d7da; border-left:5px solid #dc3545; color:#721c24; }
+        /* Pest risk levels */
+        .risk-low    { background:#d4edda; border-left:6px solid #28a745; color:#155724; }
+        .risk-medium { background:#fff3cd; border-left:6px solid #f0a500; color:#7a4f00; }
+        .risk-high   { background:#f8d7da; border-left:6px solid #dc3545; color:#721c24; }
+        /* Risk status bar */
+        .risk-bar-wrap {
+            background:#e9ecef; border-radius:20px; height:26px;
+            width:100%; position:relative; overflow:hidden; margin:8px 0 18px 0;
+        }
+        .risk-bar-fill {
+            height:100%; border-radius:20px;
+            display:flex; align-items:center; padding-left:14px;
+            font-weight:700; font-size:0.85rem; letter-spacing:0.04em;
+            transition: width 0.4s ease;
+        }
         /* Table header */
         thead tr th { background:#4a7c59 !important; color:white !important; }
     </style>
@@ -160,6 +175,46 @@ LANG = {
         "harvest_logic":  "Harvest window opens Oct 15. Status is adjusted for current rainfall trends.",
         "wx_demo":        "ℹ️  Demo mode — enter an API key above to load live data.",
 
+        # Biological Risk Monitor
+        "bio_nav":        "Biological Risk Monitor",
+        "bio_header":     "Biological Risk Monitor — Bactrocera oleae (Olive Fruit Fly)",
+        "bio_intro":      (
+            "Real-time pest pressure assessment for **Bactrocera oleae** (Olive Fruit Fly) "
+            "based on live temperature and humidity data from the Moneglia weather station. "
+            "Risk thresholds follow standard agronomic guidelines for Ligurian olive groves."
+        ),
+        "bio_risk_label": "Current 7-Day Risk Level",
+        "bio_low":        "🟢  LOW RISK",
+        "bio_medium":     "🟡  MEDIUM RISK",
+        "bio_high":       "🔴  HIGH RISK — Peak Activity",
+        "bio_low_why":    "Average temperature is outside the fly's optimal range (15–32 °C). Population activity is suppressed.",
+        "bio_medium_why": "Temperatures are in the marginal zone (15–20 °C). Monitor traps weekly.",
+        "bio_high_why":   "Temperature (20–30 °C) and humidity (>50 %) are ideal for fly activity and egg-laying. Immediate action recommended.",
+        "bio_advice_high": (
+            "Conditions ideal for fly strike. Monitor traps and consider organic preventive treatments."
+        ),
+        "bio_thresholds": "Risk Thresholds — Bactrocera oleae",
+        "bio_th_low":     "< 15 °C or > 32 °C avg",
+        "bio_th_med":     "15 °C – 20 °C avg",
+        "bio_th_high":    "20 °C – 30 °C avg + Humidity > 50 %",
+        "bio_th_low_l":   "Low — Fly suppressed",
+        "bio_th_med_l":   "Medium — Monitor traps",
+        "bio_th_high_l":  "High — Peak Activity",
+        "bio_wx_needed":  "⚠️  Connect an OpenWeatherMap API key on the **Weather & Alerts** page to enable live risk assessment.",
+        "bio_wx_demo":    "Showing demo risk profile — connect API key for live data.",
+        "bio_cost_header": "Protection Cost Estimator",
+        "bio_cost_intro":  (
+            "Based on **310 trees** across **1.3450 ha** (3 L solution per tree per full coverage):"
+        ),
+        "bio_cost_total_l": "Total solution per coverage",
+        "bio_cost_copper_l": "Organic copper (Bordeaux mix)",
+        "bio_cost_kaolin_l": "Kaolin clay (3 % suspension)",
+        "bio_cost_coverages": "Estimated coverages per season",
+        "bio_cost_note":   (
+            "Dosage guidelines: Bordeaux mixture at 1 % concentration (1 kg copper sulfate + 1 kg lime per 100 L). "
+            "Kaolin clay at 3 % (3 kg per 100 L). Consult your local agronomist for precise application rates."
+        ),
+
         # Map
         "map_header":     "Interactive Map",
         "map_caption":    "Map centred on Località Crovetta, Moneglia (Lat 44.2445, Lon 9.4880). Zoom in to explore your grove.",
@@ -242,6 +297,46 @@ LANG = {
         "harvest_logic":  "La finestra di raccolta si apre il 15 ottobre. Lo stato è aggiornato in base alle tendenze di pioggia.",
         "wx_demo":        "ℹ️  Modalità demo — inserisci una chiave API per i dati in tempo reale.",
 
+        # Biological Risk Monitor
+        "bio_nav":        "Monitoraggio Rischio Biologico",
+        "bio_header":     "Monitoraggio Rischio Biologico — Bactrocera oleae (Mosca dell'Olivo)",
+        "bio_intro":      (
+            "Valutazione in tempo reale della pressione da **Bactrocera oleae** (Mosca dell'Olivo) "
+            "basata sui dati meteo live di Moneglia. "
+            "Le soglie seguono le linee guida agronomiche per gli uliveti liguri."
+        ),
+        "bio_risk_label": "Livello di rischio attuale (7 giorni)",
+        "bio_low":        "🟢  RISCHIO BASSO",
+        "bio_medium":     "🟡  RISCHIO MEDIO",
+        "bio_high":       "🔴  RISCHIO ALTO — Attività di picco",
+        "bio_low_why":    "La temperatura media è al di fuori dell'intervallo ottimale per la mosca (15–32 °C). L'attività della popolazione è soppressa.",
+        "bio_medium_why": "Le temperature sono nella zona marginale (15–20 °C). Monitorare le trappole settimanalmente.",
+        "bio_high_why":   "Temperatura (20–30 °C) e umidità (>50 %) sono ideali per l'attività della mosca e la deposizione delle uova. Azione immediata consigliata.",
+        "bio_advice_high": (
+            "Condizioni ideali per la mosca. Monitorare le trappole e valutare trattamenti preventivi."
+        ),
+        "bio_thresholds": "Soglie di rischio — Bactrocera oleae",
+        "bio_th_low":     "< 15 °C o > 32 °C media",
+        "bio_th_med":     "15 °C – 20 °C media",
+        "bio_th_high":    "20 °C – 30 °C media + Umidità > 50 %",
+        "bio_th_low_l":   "Basso — Mosca soppressa",
+        "bio_th_med_l":   "Medio — Monitorare le trappole",
+        "bio_th_high_l":  "Alto — Attività di picco",
+        "bio_wx_needed":  "⚠️  Inserisci una chiave API OpenWeatherMap nella pagina **Meteo & Allerte** per abilitare la valutazione live.",
+        "bio_wx_demo":    "Profilo di rischio demo — inserisci chiave API per dati in tempo reale.",
+        "bio_cost_header": "Stima Costi di Protezione",
+        "bio_cost_intro":  (
+            "Basato su **310 alberi** su **1,3450 ha** (3 L di soluzione per albero per copertura completa):"
+        ),
+        "bio_cost_total_l": "Soluzione totale per copertura",
+        "bio_cost_copper_l": "Rame organico (poltiglia bordolese)",
+        "bio_cost_kaolin_l": "Caolino (sospensione al 3 %)",
+        "bio_cost_coverages": "Coperture stimate per stagione",
+        "bio_cost_note":   (
+            "Dosaggi indicativi: poltiglia bordolese all'1 % (1 kg solfato di rame + 1 kg calce per 100 L). "
+            "Caolino al 3 % (3 kg per 100 L). Consultare il proprio agronomo per le dosi precise."
+        ),
+
         # Map
         "map_header":     "Mappa interattiva",
         "map_caption":    "Mappa centrata su Località Crovetta, Moneglia (Lat 44.2445, Lon 9.4880). Usa lo zoom per esplorare l'uliveto.",
@@ -282,21 +377,30 @@ def fetch_forecast(api_key: str) -> dict | None:
 
     # Aggregate 3-hour slots → daily
     days: dict = {}
+    humidity_acc: dict = {}   # accumulate humidity readings to average later
     for slot in raw.get("list", []):
-        dt   = datetime.datetime.fromtimestamp(slot["dt"])
-        day  = dt.date()
-        temp = slot["main"]
-        rain = slot.get("rain", {}).get("3h", 0.0)
-        wind = slot["wind"]["speed"] * 3.6  # m/s → km/h
-        desc = slot["weather"][0]["description"].capitalize()
+        dt       = datetime.datetime.fromtimestamp(slot["dt"])
+        day      = dt.date()
+        temp     = slot["main"]
+        humidity = slot["main"].get("humidity", 50)
+        rain     = slot.get("rain", {}).get("3h", 0.0)
+        wind     = slot["wind"]["speed"] * 3.6  # m/s → km/h
+        desc     = slot["weather"][0]["description"].capitalize()
         if day not in days:
             days[day] = {"max": temp["temp_max"], "min": temp["temp_min"],
-                         "rain": 0.0, "wind": wind, "desc": desc}
+                         "rain": 0.0, "wind": wind, "desc": desc,
+                         "humidity": humidity}
+            humidity_acc[day] = [humidity]
         else:
             days[day]["max"]  = max(days[day]["max"], temp["temp_max"])
             days[day]["min"]  = min(days[day]["min"], temp["temp_min"])
             days[day]["rain"] += rain
-            days[day]["wind"] = max(days[day]["wind"], wind)
+            days[day]["wind"]  = max(days[day]["wind"], wind)
+            humidity_acc[day].append(humidity)
+
+    # Replace instantaneous humidity with daily average
+    for day in days:
+        days[day]["humidity"] = round(sum(humidity_acc[day]) / len(humidity_acc[day]))
 
     return dict(list(days.items())[:7])
 
@@ -333,6 +437,7 @@ with st.sidebar:
     page = st.radio(T["nav_label"], options=[
         T["nav_overview"],
         T["nav_weather"],
+        T["bio_nav"],
         T["nav_map"],
         T["nav_tasks"],
     ], key="nav_radio")
@@ -569,6 +674,207 @@ elif page == T["nav_weather"]:
 
         if api_key:
             st.error(T["wx_error"])
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PAGE: BIOLOGICAL RISK MONITOR
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == T["bio_nav"]:
+
+    st.header(f"🪰 {T['bio_header']}")
+    st.markdown(T["bio_intro"])
+    st.divider()
+
+    # ── Re-use cached forecast if available ───────────────────────────────────
+    api_key_bio = ""
+    try:
+        api_key_bio = st.secrets["OWM_API_KEY"]
+    except Exception:
+        pass
+    if not api_key_bio:
+        api_key_bio = st.session_state.get("owm_key", "")
+
+    forecast_bio = fetch_forecast(api_key_bio) if api_key_bio else None
+
+    # ── Compute risk from forecast or fall back to demo values ────────────────
+    if forecast_bio:
+        avg_temps    = [(v["max"] + v["min"]) / 2 for v in forecast_bio.values()]
+        avg_humidity = sum(v["humidity"] for v in forecast_bio.values()) / len(forecast_bio)
+        week_avg_t   = sum(avg_temps) / len(avg_temps)
+        is_live      = True
+    else:
+        # Demo values — typical Ligurian late-summer scenario
+        week_avg_t   = 22.5
+        avg_humidity = 62.0
+        is_live      = False
+        st.info(T["bio_wx_demo"])
+
+    # ── Risk classification ───────────────────────────────────────────────────
+    if week_avg_t < 15.0 or week_avg_t > 32.0:
+        risk_level  = "low"
+        risk_pct    = 20
+        bar_color   = "#28a745"
+        bar_label   = T["bio_low"]
+        risk_why    = T["bio_low_why"]
+        css_class   = "risk-low"
+    elif 15.0 <= week_avg_t <= 20.0:
+        risk_level  = "medium"
+        risk_pct    = 55
+        bar_color   = "#f0a500"
+        bar_label   = T["bio_medium"]
+        risk_why    = T["bio_medium_why"]
+        css_class   = "risk-medium"
+    elif 20.0 < week_avg_t <= 30.0 and avg_humidity > 50.0:
+        risk_level  = "high"
+        risk_pct    = 90
+        bar_color   = "#dc3545"
+        bar_label   = T["bio_high"]
+        risk_why    = T["bio_high_why"]
+        css_class   = "risk-high"
+    else:
+        # Temp in 20–30 range but humidity ≤ 50 % → medium-high
+        risk_level  = "medium"
+        risk_pct    = 68
+        bar_color   = "#f0a500"
+        bar_label   = T["bio_medium"]
+        risk_why    = T["bio_medium_why"]
+        css_class   = "risk-medium"
+
+    # ── Status layout ─────────────────────────────────────────────────────────
+    col_risk, col_meta = st.columns([2, 1])
+
+    with col_risk:
+        st.subheader(T["bio_risk_label"])
+
+        # Color-coded progress bar
+        st.markdown(
+            f'<div class="risk-bar-wrap">'
+            f'<div class="risk-bar-fill" style="width:{risk_pct}%;background:{bar_color};color:white;">'
+            f'&nbsp;{bar_label}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+        # Narrative box
+        st.markdown(
+            f'<div class="alert-box {css_class}">'
+            f'<strong>{bar_label}</strong><br>'
+            f'<span style="font-size:0.9rem">{risk_why}</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+        # High-risk actionable advice (bilingual inline)
+        if risk_level == "high":
+            st.error(
+                f"**EN:** {T['bio_advice_high']}\n\n"
+                f"**IT:** {LANG['it']['bio_advice_high']}"
+                if lang == "en" else
+                f"**IT:** {T['bio_advice_high']}\n\n"
+                f"**EN:** {LANG['en']['bio_advice_high']}"
+            )
+
+    with col_meta:
+        st.subheader("📊 " + ("Weather Inputs" if lang == "en" else "Dati meteo"))
+        src = "🔴 Live" if is_live else "⚪ Demo"
+        st.metric("Source / Fonte", src)
+        st.metric("Avg Temp (7d)", f"{week_avg_t:.1f} °C")
+        st.metric("Avg Humidity", f"{avg_humidity:.0f} %")
+
+    st.divider()
+
+    # ── Per-day risk breakdown (live only) ───────────────────────────────────
+    if forecast_bio:
+        import pandas as pd
+        st.subheader("📅 " + ("Daily Risk Profile" if lang == "en" else "Profilo giornaliero"))
+
+        day_rows = []
+        for d, v in forecast_bio.items():
+            day_avg  = (v["max"] + v["min"]) / 2
+            day_hum  = v["humidity"]
+            if day_avg < 15 or day_avg > 32:
+                day_risk = T["bio_low"]
+                day_col  = "🟢"
+            elif 15 <= day_avg <= 20:
+                day_risk = T["bio_medium"]
+                day_col  = "🟡"
+            elif 20 < day_avg <= 30 and day_hum > 50:
+                day_risk = T["bio_high"]
+                day_col  = "🔴"
+            else:
+                day_risk = T["bio_medium"]
+                day_col  = "🟡"
+
+            day_rows.append({
+                ("Date" if lang == "en" else "Data"):     d.strftime("%a %d %b"),
+                ("Avg °C" if lang == "en" else "°C med"): f"{day_avg:.1f}",
+                ("Humidity" if lang == "en" else "Umidità"): f"{day_hum} %",
+                ("Risk Level" if lang == "en" else "Livello"):  f"{day_col} {day_risk}",
+            })
+        st.table(day_rows)
+
+    st.divider()
+
+    # ── Threshold reference table ─────────────────────────────────────────────
+    st.subheader(f"📋 {T['bio_thresholds']}")
+    ref_rows = [
+        {"🚦": "🟢", ("Condition" if lang == "en" else "Condizione"): T["bio_th_low"],  ("Level" if lang == "en" else "Livello"): T["bio_th_low_l"]},
+        {"🚦": "🟡", ("Condition" if lang == "en" else "Condizione"): T["bio_th_med"],  ("Level" if lang == "en" else "Livello"): T["bio_th_med_l"]},
+        {"🚦": "🔴", ("Condition" if lang == "en" else "Condizione"): T["bio_th_high"], ("Level" if lang == "en" else "Livello"): T["bio_th_high_l"]},
+    ]
+    st.table(ref_rows)
+
+    st.divider()
+
+    # ── Protection Cost Estimator ─────────────────────────────────────────────
+    st.subheader(f"💶 {T['bio_cost_header']}")
+    st.markdown(T["bio_cost_intro"])
+
+    TREES        = TREE_BASELINE          # 310
+    L_PER_TREE   = 3.0
+    TOTAL_L      = TREES * L_PER_TREE     # 930 L per full coverage
+
+    # Organic copper (Bordeaux mixture) at 1 % → 1 kg copper sulfate per 100 L
+    COPPER_KG    = (TOTAL_L / 100) * 1.0  # 9.30 kg
+
+    # Kaolin clay at 3 % → 3 kg per 100 L
+    KAOLIN_KG    = (TOTAL_L / 100) * 3.0  # 27.9 kg
+
+    # Typical season: 2–4 applications
+    COVERAGES_LO = 2
+    COVERAGES_HI = 4
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric(T["bio_cost_total_l"],    f"{TOTAL_L:.0f} L")
+    c2.metric(T["bio_cost_copper_l"],   f"{COPPER_KG:.1f} kg / coverage")
+    c3.metric(T["bio_cost_kaolin_l"],   f"{KAOLIN_KG:.1f} kg / coverage")
+    c4.metric(T["bio_cost_coverages"],  f"{COVERAGES_LO}–{COVERAGES_HI} × / season")
+
+    # Season totals
+    st.write("")
+    s1, s2 = st.columns(2)
+    with s1:
+        st.info(
+            f"**Copper season total:** {COPPER_KG * COVERAGES_LO:.1f} – "
+            f"{COPPER_KG * COVERAGES_HI:.1f} kg  "
+            f"({TOTAL_L * COVERAGES_LO:.0f} – {TOTAL_L * COVERAGES_HI:.0f} L solution)"
+            if lang == "en" else
+            f"**Rame totale stagione:** {COPPER_KG * COVERAGES_LO:.1f} – "
+            f"{COPPER_KG * COVERAGES_HI:.1f} kg  "
+            f"({TOTAL_L * COVERAGES_LO:.0f} – {TOTAL_L * COVERAGES_HI:.0f} L soluzione)"
+        )
+    with s2:
+        st.info(
+            f"**Kaolin season total:** {KAOLIN_KG * COVERAGES_LO:.1f} – "
+            f"{KAOLIN_KG * COVERAGES_HI:.1f} kg  "
+            f"({TOTAL_L * COVERAGES_LO:.0f} – {TOTAL_L * COVERAGES_HI:.0f} L solution)"
+            if lang == "en" else
+            f"**Caolino totale stagione:** {KAOLIN_KG * COVERAGES_LO:.1f} – "
+            f"{KAOLIN_KG * COVERAGES_HI:.1f} kg  "
+            f"({TOTAL_L * COVERAGES_LO:.0f} – {TOTAL_L * COVERAGES_HI:.0f} L soluzione)"
+        )
+
+    st.caption(T["bio_cost_note"])
 
 
 # ══════════════════════════════════════════════════════════════════════════════
