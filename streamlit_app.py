@@ -285,6 +285,58 @@ LANG = {
             "Quintali = 100 kg units. Liguria DOP olive oil benchmark: ~16 % extraction."
         ),
 
+        # Harvest Insights — seasonal phases
+        "hv_phase_spring_badge":  "🌱 Active Phase: Spring Maintenance  (Mar–May)",
+        "hv_phase_summer_badge":  "☀️ Active Phase: Biological Risk Season  (Jun–Sep)",
+        "hv_phase_harvest_badge": "🍂 Active Phase: Harvest & Oil Predictor  (Oct–Dec)",
+        "hv_phase_winter_badge":  "❄️ Active Phase: Winter Rest & Planning  (Jan–Feb)",
+        "hv_spring_header":  "Spring Maintenance Dashboard",
+        "hv_spring_intro":   (
+            "Spring (March–May) is the key window for **fertilisation, pruning follow-up, "
+            "and early pest scouting**. Calculations below are based on 310 trees across 1.3450 ha."
+        ),
+        "hv_fert_header":    "🌿 Organic Fertiliser Estimator — 310 Trees",
+        "hv_fert_intro":     (
+            "Recommended inputs for a single spring application, calculated per tree and grove total:"
+        ),
+        "hv_fert_npk":       "Slow-release NPK (4-3-3)",
+        "hv_fert_npk_v":     "155 kg  (500 g / tree)",
+        "hv_fert_compost":   "Mature compost / manure",
+        "hv_fert_compost_v": "1,550–3,100 kg  (5–10 kg / tree)",
+        "hv_fert_boron":     "Boron (micronutrient)",
+        "hv_fert_boron_v":   "1.6 kg  (5 g / tree)",
+        "hv_fert_foliar":    "Foliar Zn/Mn spray (concentrate)",
+        "hv_fert_foliar_v":  "18.6 L  (3 L solution / tree @ 2 % conc.)",
+        "hv_fert_note":      (
+            "Apply NPK and compost between March–April before leaf flush. "
+            "Foliar spray best at petal-fall stage. Consult an agronomist for local soil adjustments."
+        ),
+        "hv_spring_tasks":   "📋 Spring Checklist",
+        "hv_plot2675_note":  (
+            "⚠️  **Plot 2675 — Semenzale Irriguo (3,608 m²):** This plot is classified as "
+            "irrigated arable/mixed land. It does **not** carry an olive tree count but "
+            "**requires priority irrigation monitoring** during summer dry spells (June–September) "
+            "to prevent soil moisture stress spreading to adjacent Uliveto plots."
+        ),
+        "hv_summer_header":  "Biological Risk Season",
+        "hv_summer_intro":   (
+            "June–September is peak season for **Bactrocera oleae** (Olive Fruit Fly). "
+            "This dashboard is redirecting you to the live risk monitor below. "
+            "Note: Plot 2675 (Semenzale Irriguo) may need priority irrigation during dry spells."
+        ),
+        "hv_summer_p2675":   (
+            "💧 **Plot 2675 — Semenzale Irriguo:** During dry periods (rainfall < 10 mm / 7 days), "
+            "prioritise irrigation on this plot first. Its irrigated classification means water "
+            "stress here can reduce soil humidity across the grove and elevate fly risk."
+        ),
+        "hv_summer_nav":     "👉  Go to Biological Risk Monitor for the live fly pressure assessment.",
+        "hv_winter_header":  "Winter Rest & Planning",
+        "hv_winter_intro":   (
+            "January–February is the dormant period. Use this time for equipment maintenance, "
+            "annual record review, and planning the coming season's inputs."
+        ),
+        "hv_winter_tasks":   "📋 Winter Checklist",
+
         # Tasks
         "tasks_header":   "Seasonal Task Calendar",
         "tasks_note":     "Track your seasonal olive grove activities. Checkboxes persist during your session.",
@@ -475,6 +527,60 @@ LANG = {
             "Quintali = unità da 100 kg. Benchmark DOP Liguria: ~16 % di estrazione."
         ),
 
+        # Harvest Insights — seasonal phases
+        "hv_phase_spring_badge":  "🌱 Fase attiva: Manutenzione primaverile  (Mar–Mag)",
+        "hv_phase_summer_badge":  "☀️ Fase attiva: Stagione rischio biologico  (Giu–Set)",
+        "hv_phase_harvest_badge": "🍂 Fase attiva: Raccolta & Previsione Olio  (Ott–Dic)",
+        "hv_phase_winter_badge":  "❄️ Fase attiva: Riposo invernale & Pianificazione  (Gen–Feb)",
+        "hv_spring_header":  "Dashboard manutenzione primaverile",
+        "hv_spring_intro":   (
+            "La primavera (marzo–maggio) è la finestra chiave per **concimazione, "
+            "completamento della potatura e primo monitoraggio dei parassiti**. "
+            "I calcoli si basano su 310 alberi su 1,3450 ha."
+        ),
+        "hv_fert_header":    "🌿 Stima fertilizzanti organici — 310 alberi",
+        "hv_fert_intro":     (
+            "Apporti consigliati per una singola applicazione primaverile, calcolati per albero e totale uliveto:"
+        ),
+        "hv_fert_npk":       "NPK a lenta cessione (4-3-3)",
+        "hv_fert_npk_v":     "155 kg  (500 g / albero)",
+        "hv_fert_compost":   "Compost maturo / letame",
+        "hv_fert_compost_v": "1.550–3.100 kg  (5–10 kg / albero)",
+        "hv_fert_boron":     "Boro (micronutriente)",
+        "hv_fert_boron_v":   "1,6 kg  (5 g / albero)",
+        "hv_fert_foliar":    "Spray fogliare Zn/Mn (concentrato)",
+        "hv_fert_foliar_v":  "18,6 L  (3 L soluzione / albero @ conc. 2 %)",
+        "hv_fert_note":      (
+            "Applicare NPK e compost tra marzo e aprile, prima della ripresa vegetativa. "
+            "Lo spray fogliare è ideale allo stadio di caduta petali. Consultare un agronomo per "
+            "adattamenti in base all'analisi del suolo locale."
+        ),
+        "hv_spring_tasks":   "📋 Checklist primaverile",
+        "hv_plot2675_note":  (
+            "⚠️  **Mappale 2675 — Semenzale Irriguo (3.608 m²):** Questa particella è classificata "
+            "come terreno seminativo irriguo. **Non** ha un conteggio di ulivi ma "
+            "**richiede monitoraggio prioritario dell'irrigazione** durante i periodi estivi siccitosi "
+            "(giugno–settembre) per evitare che lo stress idrico si propaghi alle particelle Uliveto adiacenti."
+        ),
+        "hv_summer_header":  "Stagione rischio biologico",
+        "hv_summer_intro":   (
+            "Da giugno a settembre è il picco stagionale per **Bactrocera oleae** (Mosca dell'Olivo). "
+            "Questa sezione reindirizza al monitor di rischio live. "
+            "Nota: il mappale 2675 (Semenzale Irriguo) può necessitare di irrigazione prioritaria nei periodi siccitosi."
+        ),
+        "hv_summer_p2675":   (
+            "💧 **Mappale 2675 — Semenzale Irriguo:** Nei periodi secchi (pioggia < 10 mm / 7 giorni), "
+            "dare priorità all'irrigazione di questa particella. La sua classificazione irrigua significa che "
+            "lo stress idrico può ridurre l'umidità del suolo nell'intero uliveto e aumentare il rischio mosca."
+        ),
+        "hv_summer_nav":     "👉  Vai al Monitoraggio Rischio Biologico per la valutazione live della pressione della mosca.",
+        "hv_winter_header":  "Riposo invernale & Pianificazione",
+        "hv_winter_intro":   (
+            "Gennaio–febbraio è il periodo di riposo vegetativo. Usare questo tempo per la manutenzione "
+            "delle attrezzature, la revisione dei registri annuali e la pianificazione degli input della stagione."
+        ),
+        "hv_winter_tasks":   "📋 Checklist invernale",
+
         # Tasks
         "tasks_header":   "Calendario attività stagionali",
         "tasks_note":     "Tieni traccia delle attività stagionali del tuo uliveto.",
@@ -551,13 +657,33 @@ def harvest_window_open() -> bool:
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/"
-        "Flag_of_Liguria.svg/200px-Flag_of_Liguria.svg.png",
-        width=80,
+    st.markdown(
+        """
+        <div style="display:flex;align-items:center;gap:10px;padding:4px 0 6px 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 64 64">
+            <!-- Olive branch -->
+            <ellipse cx="32" cy="32" rx="28" ry="28" fill="#4a7c59" opacity="0.15"/>
+            <line x1="32" y1="58" x2="32" y2="10" stroke="#4a7c59" stroke-width="2.5"
+                  stroke-linecap="round"/>
+            <ellipse cx="22" cy="22" rx="8" ry="5" fill="#5a9e6f" transform="rotate(-40 22 22)"/>
+            <ellipse cx="42" cy="28" rx="8" ry="5" fill="#5a9e6f" transform="rotate(40 42 28)"/>
+            <ellipse cx="20" cy="36" rx="7" ry="4" fill="#6aaa7e" transform="rotate(-30 20 36)"/>
+            <ellipse cx="44" cy="40" rx="7" ry="4" fill="#6aaa7e" transform="rotate(30 44 40)"/>
+            <!-- Olives -->
+            <ellipse cx="24" cy="20" rx="3.5" ry="4.5" fill="#2d5a3d"/>
+            <ellipse cx="40" cy="26" rx="3.5" ry="4.5" fill="#2d5a3d"/>
+            <ellipse cx="22" cy="34" rx="3" ry="4"   fill="#1a4a2e"/>
+          </svg>
+          <div>
+            <div style="font-weight:700;font-size:1rem;color:#1a4a2e;line-height:1.2;">
+              🫒 Olive Grove Manager
+            </div>
+            <div style="font-size:0.72rem;color:#4a7c59;">Moneglia · Foglio 13</div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
-    st.markdown("### 🫒 Olive Grove Manager")
-    st.caption("Moneglia (GE) · Foglio 13")
     st.divider()
 
     lang_choice = st.radio(
@@ -1048,23 +1174,53 @@ elif page == T["bio_nav"]:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PAGE: HARVEST INSIGHTS
+# PAGE: HARVEST INSIGHTS  (context-aware by calendar month)
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == T["hv_nav"]:
 
+    import pandas as pd
+
+    # ── Determine current agricultural phase ──────────────────────────────────
+    today_m = datetime.date.today().month
+    if   3 <= today_m <= 5:   phase = "spring"
+    elif 6 <= today_m <= 9:   phase = "summer"
+    elif 10 <= today_m <= 12: phase = "harvest"
+    else:                     phase = "winter"   # Jan–Feb
+
+    PHASE_BADGE = {
+        "spring":  T["hv_phase_spring_badge"],
+        "summer":  T["hv_phase_summer_badge"],
+        "harvest": T["hv_phase_harvest_badge"],
+        "winter":  T["hv_phase_winter_badge"],
+    }
+    BADGE_COLOR = {
+        "spring":  "#d4edda", "summer": "#fff3cd",
+        "harvest": "#fde8d8", "winter": "#e2e8f0",
+    }
+    BADGE_BORDER = {
+        "spring":  "#28a745", "summer": "#f0a500",
+        "harvest": "#d06030", "winter": "#8090a0",
+    }
+
     st.header(f"🫒 {T['hv_header']}")
     st.caption(T["hv_subhead"])
-    st.markdown(T["hv_intro"])
-    st.divider()
 
-    # ── Constants ─────────────────────────────────────────────────────────────
-    TREES_HV   = TREE_BASELINE        # 310
-    HA_HV      = TOTAL_HA             # 1.3450
-    # kg per tree per year type
+    # Phase badge
+    st.markdown(
+        f'<div style="background:{BADGE_COLOR[phase]};border-left:5px solid '
+        f'{BADGE_BORDER[phase]};border-radius:8px;padding:10px 16px;'
+        f'font-weight:700;font-size:1rem;margin-bottom:12px;">'
+        f'{PHASE_BADGE[phase]}</div>',
+        unsafe_allow_html=True,
+    )
+
+    # ── Shared constants ──────────────────────────────────────────────────────
+    TREES_HV   = TREE_BASELINE   # 310
+    HA_HV      = TOTAL_HA        # 1.3450
     CARICA_LO, CARICA_HI   = 15, 20
-    SCARICA_LO, SCARICA_HI = 5,  8
+    SCARICA_LO, SCARICA_HI = 5, 8
 
-    # ── Re-use cached forecast ────────────────────────────────────────────────
+    # ── Shared: re-use cached forecast ───────────────────────────────────────
     api_key_hv = ""
     try:
         api_key_hv = st.secrets["OWM_API_KEY"]
@@ -1072,185 +1228,314 @@ elif page == T["hv_nav"]:
         pass
     if not api_key_hv:
         api_key_hv = st.session_state.get("owm_key", "")
-
     forecast_hv = fetch_forecast(api_key_hv) if api_key_hv else None
 
-    # Derive 7-day rainfall total from forecast (proxy for pre-harvest moisture)
     if forecast_hv:
-        rain_7d = sum(v["rain"] for v in forecast_hv.values())
+        rain_7d  = sum(v["rain"] for v in forecast_hv.values())
         rain_src = "live"
     else:
-        rain_7d = 28.0   # demo: typical Ligurian late-Oct value
+        rain_7d  = 28.0
         rain_src = "demo"
-        st.info(T["hv_demo_rain"])
 
-    # ── Section 1: Year-type selector ─────────────────────────────────────────
-    st.subheader(f"🌿 {T['hv_yield_header']}")
+    # ══════════════════════════════════════════════════════════════════════════
+    # PHASE: SPRING  (March – May)
+    # ══════════════════════════════════════════════════════════════════════════
+    if phase == "spring":
 
-    left_in, right_in = st.columns([1, 2])
-    with left_in:
-        year_type = st.radio(
-            T["hv_year_type"],
-            options=[T["hv_carica"], T["hv_scarica"]],
-            key="hv_year_radio",
+        st.markdown(T["hv_spring_intro"])
+        st.divider()
+
+        # ── Fertiliser estimator ──────────────────────────────────────────────
+        st.subheader(T["hv_fert_header"])
+        st.markdown(T["hv_fert_intro"])
+
+        f1, f2, f3, f4 = st.columns(4)
+        f1.metric(T["hv_fert_npk"],     T["hv_fert_npk_v"])
+        f2.metric(T["hv_fert_compost"], T["hv_fert_compost_v"])
+        f3.metric(T["hv_fert_boron"],   T["hv_fert_boron_v"])
+        f4.metric(T["hv_fert_foliar"],  T["hv_fert_foliar_v"])
+        st.caption(T["hv_fert_note"])
+
+        st.divider()
+
+        # ── Plot 2675 special note ─────────────────────────────────────────────
+        st.warning(T["hv_plot2675_note"])
+
+        st.divider()
+
+        # ── Spring checklist ──────────────────────────────────────────────────
+        st.subheader(T["hv_spring_tasks"])
+        spring_tasks_en = [
+            ("✂️ Complete any remaining pruning before April bud-break", True),
+            ("🌿 Apply slow-release NPK fertiliser (155 kg total)", False),
+            ("🪣 Apply compost / mature manure (1,550–3,100 kg)", False),
+            ("💉 Foliar Zn/Mn spray at petal-fall stage", False),
+            ("🔎 First olive fly trap inspection (hang yellow sticky traps)", False),
+            ("💧 Check irrigation pipes after winter (esp. Plot 2675)", False),
+            ("📋 Update grove records from previous harvest", False),
+        ]
+        spring_tasks_it = [
+            ("✂️ Completare la potatura residua prima della ripresa vegetativa di aprile", True),
+            ("🌿 Applicare fertilizzante NPK a lenta cessione (155 kg totali)", False),
+            ("🪣 Applicare compost / letame maturo (1.550–3.100 kg)", False),
+            ("💉 Spray fogliare Zn/Mn allo stadio caduta petali", False),
+            ("🔎 Prima ispezione trappole mosca (appendere trappole adesive gialle)", False),
+            ("💧 Verificare impianto irrigazione dopo l'inverno (spec. mappale 2675)", False),
+            ("📋 Aggiornare i registri dell'uliveto con i dati del raccolto precedente", False),
+        ]
+        tasks = spring_tasks_it if lang == "it" else spring_tasks_en
+        col_t1, col_t2 = st.columns(2)
+        for i, (task, done) in enumerate(tasks):
+            with (col_t1 if i % 2 == 0 else col_t2):
+                st.checkbox(task, value=done, key=f"sp_task_{i}")
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # PHASE: SUMMER  (June – September)
+    # ══════════════════════════════════════════════════════════════════════════
+    elif phase == "summer":
+
+        st.markdown(T["hv_summer_intro"])
+        st.divider()
+
+        # ── Plot 2675 irrigation priority alert ───────────────────────────────
+        if forecast_hv and rain_7d < 10.0:
+            st.error(T["hv_summer_p2675"])
+        else:
+            st.warning(T["hv_summer_p2675"])
+
+        st.divider()
+
+        # ── Live fly risk mini-dashboard ──────────────────────────────────────
+        st.subheader("🪰 " + (
+            "Olive Fly Pressure — Live Summary"
+            if lang == "en" else
+            "Pressione mosca dell'olivo — Riepilogo live"
+        ))
+
+        if forecast_hv:
+            avg_temps    = [(v["max"] + v["min"]) / 2 for v in forecast_hv.values()]
+            avg_humidity = sum(v["humidity"] for v in forecast_hv.values()) / len(forecast_hv)
+            week_avg_t   = sum(avg_temps) / len(avg_temps)
+
+            if week_avg_t < 15 or week_avg_t > 32:
+                s_risk, s_color, s_pct = T["bio_low"],    "#28a745", 20
+            elif 15 <= week_avg_t <= 20:
+                s_risk, s_color, s_pct = T["bio_medium"], "#f0a500", 55
+            elif 20 < week_avg_t <= 30 and avg_humidity > 50:
+                s_risk, s_color, s_pct = T["bio_high"],   "#dc3545", 90
+            else:
+                s_risk, s_color, s_pct = T["bio_medium"], "#f0a500", 65
+
+            s1, s2, s3 = st.columns(3)
+            s1.metric("Avg Temp (7d)", f"{week_avg_t:.1f} °C")
+            s2.metric("Avg Humidity", f"{avg_humidity:.0f} %")
+            s3.metric("Fly Risk", s_risk.split("  ")[-1])
+
+            st.markdown(
+                f'<div class="risk-bar-wrap"><div class="risk-bar-fill" '
+                f'style="width:{s_pct}%;background:{s_color};color:white;">'
+                f'&nbsp;{s_risk}</div></div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.info(T["hv_demo_rain"])
+
+        st.info(T["hv_summer_nav"])
+
+        st.divider()
+
+        # ── Irrigation & dry-spell monitor ───────────────────────────────────
+        st.subheader("💧 " + (
+            "7-Day Rainfall Monitor" if lang == "en" else "Monitor piogge 7 giorni"
+        ))
+        r1, r2 = st.columns([1, 2])
+        r1.metric(T["hv_rain_7d"], f"{rain_7d:.1f} mm",
+                  delta="Live OWM" if rain_src == "live" else "Demo")
+
+        with r2:
+            if rain_7d < 10:
+                st.markdown(
+                    f'<div class="alert-box harvest-wait">'
+                    f'<strong>{"Dry spell — irrigate Plot 2675 first" if lang=="en" else "Siccità — irrigare prima il mappale 2675"}</strong><br>'
+                    f'<small>{"< 10 mm rain in 7 days. Semenzale Irriguo plot needs priority water." if lang=="en" else "< 10 mm in 7 giorni. Il mappale Semenzale Irriguo necessita di irrigazione prioritaria."}</small>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f'<div class="alert-box harvest-open">'
+                    f'{"✅ Adequate rainfall — normal irrigation schedule." if lang=="en" else "✅ Piogge adeguate — programma irrigazione normale."}'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # PHASE: HARVEST  (October – December)
+    # ══════════════════════════════════════════════════════════════════════════
+    elif phase == "harvest":
+
+        st.markdown(T["hv_intro"])
+        st.divider()
+
+        # ── Section 1: Year-type selector ────────────────────────────────────
+        st.subheader(f"🌿 {T['hv_yield_header']}")
+
+        left_in, right_in = st.columns([1, 2])
+        with left_in:
+            year_type = st.radio(
+                T["hv_year_type"],
+                options=[T["hv_carica"], T["hv_scarica"]],
+                key="hv_year_radio",
+            )
+        with right_in:
+            if year_type == T["hv_carica"]:
+                kg_lo = CARICA_LO * TREES_HV
+                kg_hi = CARICA_HI * TREES_HV
+                st.info(f"ℹ️  {T['hv_carica_hint']}")
+            else:
+                kg_lo = SCARICA_LO * TREES_HV
+                kg_hi = SCARICA_HI * TREES_HV
+                st.info(f"ℹ️  {T['hv_scarica_hint']}")
+
+        q_lo, q_hi = kg_lo / 100, kg_hi / 100
+
+        m1, m2, m3, m4, m5 = st.columns(5)
+        m1.metric(T["hv_low_kg"],  f"{kg_lo:,} kg")
+        m2.metric(T["hv_high_kg"], f"{kg_hi:,} kg")
+        m3.metric(T["hv_low_q"],   f"{q_lo:.1f} q")
+        m4.metric(T["hv_high_q"],  f"{q_hi:.1f} q")
+        m5.metric(T["hv_trees_used"] + " / " + T["hv_ha_used"],
+                  f"{TREES_HV} / {HA_HV:.4f} ha")
+
+        st.divider()
+
+        # ── Section 2: Oil Extraction Model ──────────────────────────────────
+        st.subheader(f"🫙 {T['hv_oil_header']}")
+        st.caption(T["hv_eff_hint"])
+
+        eff_pct = st.slider(
+            T["hv_eff_label"],
+            min_value=14, max_value=17, value=16, step=1,
+            format="%d %%", key="hv_eff_slider",
         )
-    with right_in:
-        if year_type == T["hv_carica"]:
-            kg_lo = CARICA_LO * TREES_HV
-            kg_hi = CARICA_HI * TREES_HV
-            st.info(f"ℹ️  {T['hv_carica_hint']}")
-        else:
-            kg_lo = SCARICA_LO * TREES_HV
-            kg_hi = SCARICA_HI * TREES_HV
-            st.info(f"ℹ️  {T['hv_scarica_hint']}")
+        eff = eff_pct / 100
 
-    q_lo = kg_lo / 100
-    q_hi = kg_hi / 100
+        oil_lo = round(kg_lo * eff, 1)
+        oil_hi = round(kg_hi * eff, 1)
+        btl_lo = int(oil_lo / 0.75)
+        btl_hi = int(oil_hi / 0.75)
 
-    # Metric cards — yield
-    st.write("")
-    m1, m2, m3, m4, m5 = st.columns(5)
-    m1.metric(T["hv_low_kg"],   f"{kg_lo:,} kg")
-    m2.metric(T["hv_high_kg"],  f"{kg_hi:,} kg")
-    m3.metric(T["hv_low_q"],    f"{q_lo:.1f} q")
-    m4.metric(T["hv_high_q"],   f"{q_hi:.1f} q")
-    m5.metric(T["hv_trees_used"] + " / " + T["hv_ha_used"],
-              f"{TREES_HV} / {HA_HV:.4f} ha")
+        o1, o2, o3, o4 = st.columns(4)
+        o1.metric(T["hv_oil_low"],  f"{oil_lo:,} L")
+        o2.metric(T["hv_oil_high"], f"{oil_hi:,} L")
+        o3.metric(T["hv_oil_bottles"] + " (low)",  f"~{btl_lo:,} btl")
+        o4.metric(T["hv_oil_bottles"] + " (high)", f"~{btl_hi:,} btl")
 
-    st.divider()
+        st.markdown(
+            f'<div style="margin:14px 0 4px 0;font-size:0.82rem;color:#555;">'
+            f'{"Extraction efficiency" if lang=="en" else "Efficienza estrazione"}: '
+            f'<strong>{eff_pct} %</strong></div>'
+            f'<div style="background:#e9ecef;border-radius:20px;height:22px;overflow:hidden;">'
+            f'<div style="width:{((eff_pct-14)/3)*100:.0f}%;background:#4a7c59;height:100%;'
+            f'border-radius:20px;display:flex;align-items:center;padding-left:10px;'
+            f'color:white;font-size:0.78rem;font-weight:700;">&nbsp;{eff_pct} %</div></div>',
+            unsafe_allow_html=True,
+        )
 
-    # ── Section 2: Oil Extraction Model ──────────────────────────────────────
-    st.subheader(f"🫙 {T['hv_oil_header']}")
-    st.caption(T["hv_eff_hint"])
+        st.divider()
 
-    eff_pct = st.slider(
-        T["hv_eff_label"],
-        min_value=14,
-        max_value=17,
-        value=16,
-        step=1,
-        format="%d %%",
-        key="hv_eff_slider",
-    )
-    eff = eff_pct / 100
+        # ── Section 3: Water Content & Quality Alert ──────────────────────────
+        st.subheader(f"💧 {T['hv_quality_header']}")
+        qcol_a, qcol_b = st.columns([2, 1])
 
-    oil_lo = round(kg_lo * eff, 1)
-    oil_hi = round(kg_hi * eff, 1)
-    btl_lo = int(oil_lo / 0.75)
-    btl_hi = int(oil_hi / 0.75)
+        with qcol_b:
+            st.metric(T["hv_rain_7d"], f"{rain_7d:.1f} mm")
+            st.caption("🔴 Live OWM" if rain_src == "live" else "⚪ Demo")
+            st.caption(T["hv_rain_src"])
 
-    st.write("")
-    o1, o2, o3, o4 = st.columns(4)
-    o1.metric(T["hv_oil_low"],     f"{oil_lo:,} L")
-    o2.metric(T["hv_oil_high"],    f"{oil_hi:,} L")
-    o3.metric(T["hv_oil_bottles"] + " (low)",  f"~{btl_lo:,} btl")
-    o4.metric(T["hv_oil_bottles"] + " (high)", f"~{btl_hi:,} btl")
+        with qcol_a:
+            if rain_7d > 50.0:
+                st.markdown(
+                    f'<div class="alert-box harvest-wait">'
+                    f'<strong>EN:</strong> {T["hv_rain_high_alert"]}<br><br>'
+                    f'<strong>IT:</strong> {LANG["it"]["hv_rain_high_alert"]}'
+                    f'</div>', unsafe_allow_html=True,
+                )
+            elif rain_7d < 10.0:
+                st.markdown(
+                    f'<div class="alert-box frost-alert">'
+                    f'<strong>EN:</strong> {T["hv_rain_low_note"]}<br><br>'
+                    f'<strong>IT:</strong> {LANG["it"]["hv_rain_low_note"]}'
+                    f'</div>', unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f'<div class="alert-box harvest-open">'
+                    f'{T["hv_rain_normal"]}'
+                    f'</div>', unsafe_allow_html=True,
+                )
 
-    # Visual extraction funnel bar
-    st.markdown(
-        f'<div style="margin:14px 0 4px 0;font-size:0.82rem;color:#555;">'
-        f'Extraction efficiency: <strong>{eff_pct} %</strong></div>'
-        f'<div style="background:#e9ecef;border-radius:20px;height:22px;overflow:hidden;">'
-        f'<div style="width:{((eff_pct-14)/3)*100:.0f}%;background:#4a7c59;'
-        f'height:100%;border-radius:20px;display:flex;align-items:center;'
-        f'padding-left:10px;color:white;font-size:0.78rem;font-weight:700;">'
-        f'&nbsp;{eff_pct} %</div></div>',
-        unsafe_allow_html=True,
-    )
+        st.divider()
 
-    st.divider()
+        # ── Section 4: Full bilingual summary table ───────────────────────────
+        st.subheader(f"📊 {T['hv_summary_header']}")
 
-    # ── Section 3: Water Content & Quality Alert ──────────────────────────────
-    st.subheader(f"💧 {T['hv_quality_header']}")
+        def _row(label, kg, eff_r):
+            oil = round(kg * eff_r, 1)
+            return {
+                T["hv_col_scenario"]:  label,
+                T["hv_col_olives_kg"]: f"{kg:,}",
+                T["hv_col_olives_q"]:  f"{kg/100:.1f}",
+                T["hv_col_oil_l"]:     f"{oil:,}",
+                T["hv_col_oil_btl"]:   f"{int(oil/0.75):,}",
+            }
 
-    qcol_a, qcol_b = st.columns([2, 1])
-    with qcol_b:
-        src_label = "🔴 Live OWM" if rain_src == "live" else "⚪ Demo"
-        st.metric(T["hv_rain_7d"], f"{rain_7d:.1f} mm")
-        st.caption(src_label)
-        st.caption(T["hv_rain_src"])
+        df_summary = pd.DataFrame([
+            _row(T["hv_row_carica_lo"],  CARICA_LO  * TREES_HV, eff),
+            _row(T["hv_row_carica_hi"],  CARICA_HI  * TREES_HV, eff),
+            _row(T["hv_row_scarica_lo"], SCARICA_LO * TREES_HV, eff),
+            _row(T["hv_row_scarica_hi"], SCARICA_HI * TREES_HV, eff),
+        ])
+        st.dataframe(df_summary, hide_index=True, use_container_width=True)
+        st.caption(f"⚙️  {T['hv_note']}  |  Extraction: **{eff_pct} %**")
 
-    with qcol_a:
-        # Thresholds: >100 mm / 2 weeks → user asked for 2-week figure;
-        # our 7-day proxy: >50 mm in 7 days ≈ >100 mm in 14 days
-        RAIN_HIGH_7D = 50.0   # mm threshold over 7 days
-        RAIN_LOW_7D  = 10.0   # mm threshold for dry / stress
+        st.success(
+            f"**{'Current selection' if lang=='en' else 'Selezione attuale'}: "
+            f"{'Carica' if year_type==T['hv_carica'] else 'Scarica'} @ {eff_pct} %** — "
+            f"{kg_lo:,}–{kg_hi:,} kg → **{oil_lo:,}–{oil_hi:,} L EVOO** "
+            f"(~{btl_lo:,}–{btl_hi:,} {'bottles' if lang=='en' else 'bottiglie'})"
+        )
 
-        if rain_7d > RAIN_HIGH_7D:
-            st.markdown(
-                f'<div class="alert-box harvest-wait">'
-                f'<strong>EN:</strong> {T["hv_rain_high_alert"]}<br><br>'
-                f'<strong>IT:</strong> {LANG["it"]["hv_rain_high_alert"]}'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-        elif rain_7d < RAIN_LOW_7D:
-            st.markdown(
-                f'<div class="alert-box frost-alert">'
-                f'<strong>EN:</strong> {T["hv_rain_low_note"]}<br><br>'
-                f'<strong>IT:</strong> {LANG["it"]["hv_rain_low_note"]}'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(
-                f'<div class="alert-box harvest-open">'
-                f'{T["hv_rain_normal"]}'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
+    # ══════════════════════════════════════════════════════════════════════════
+    # PHASE: WINTER  (January – February)
+    # ══════════════════════════════════════════════════════════════════════════
+    else:
 
-    st.divider()
+        st.markdown(T["hv_winter_intro"])
+        st.divider()
+        st.subheader(T["hv_winter_tasks"])
 
-    # ── Section 4: Full bilingual summary table ───────────────────────────────
-    st.subheader(f"📊 {T['hv_summary_header']}")
-
-    def _row(label, kg, eff_r):
-        oil = round(kg * eff_r, 1)
-        return {
-            T["hv_col_scenario"]:  label,
-            T["hv_col_olives_kg"]: f"{kg:,}",
-            T["hv_col_olives_q"]:  f"{kg/100:.1f}",
-            T["hv_col_oil_l"]:     f"{oil:,}",
-            T["hv_col_oil_btl"]:   f"{int(oil/0.75):,}",
-        }
-
-    summary_rows = [
-        _row(T["hv_row_carica_lo"],  CARICA_LO  * TREES_HV, eff),
-        _row(T["hv_row_carica_hi"],  CARICA_HI  * TREES_HV, eff),
-        _row(T["hv_row_scarica_lo"], SCARICA_LO * TREES_HV, eff),
-        _row(T["hv_row_scarica_hi"], SCARICA_HI * TREES_HV, eff),
-    ]
-
-    # Highlight the active selection
-    active_lo = T["hv_row_carica_lo"]  if year_type == T["hv_carica"] else T["hv_row_scarica_lo"]
-    active_hi = T["hv_row_carica_hi"]  if year_type == T["hv_carica"] else T["hv_row_scarica_hi"]
-
-    import pandas as pd
-    df_summary = pd.DataFrame(summary_rows)
-    st.dataframe(
-        df_summary,
-        hide_index=True,
-        use_container_width=True,
-        column_config={
-            T["hv_col_scenario"]:  st.column_config.TextColumn(width="medium"),
-            T["hv_col_olives_kg"]: st.column_config.TextColumn(width="small"),
-            T["hv_col_olives_q"]:  st.column_config.TextColumn(width="small"),
-            T["hv_col_oil_l"]:     st.column_config.TextColumn(width="small"),
-            T["hv_col_oil_btl"]:   st.column_config.TextColumn(width="small"),
-        },
-    )
-
-    st.caption(f"⚙️  {T['hv_note']}  |  Extraction rate: **{eff_pct} %**")
-
-    # Quick callout for currently selected scenario
-    st.success(
-        f"**{'Current selection' if lang=='en' else 'Selezione attuale'}: "
-        f"{'Carica' if year_type==T['hv_carica'] else 'Scarica'} @ {eff_pct} % extraction** — "
-        f"{kg_lo:,}–{kg_hi:,} kg olives → "
-        f"**{oil_lo:,}–{oil_hi:,} L EVOO** "
-        f"(~{btl_lo:,}–{btl_hi:,} {'bottles' if lang=='en' else 'bottiglie'})"
-    )
+        winter_tasks_en = [
+            "🔧 Service and sharpen pruning tools",
+            "📋 Review grove records and yield from last harvest",
+            "🗓️ Plan spring fertilisation schedule",
+            "💧 Inspect irrigation system for winter damage",
+            "📦 Inventory storage units (Mappali 2673, 2674)",
+            "🌱 Order organic inputs (NPK, compost, Kaolin) for spring",
+        ]
+        winter_tasks_it = [
+            "🔧 Revisione e affilatura degli attrezzi da potatura",
+            "📋 Revisione registri uliveto e resa dell'ultimo raccolto",
+            "🗓️ Pianificare il programma di concimazione primaverile",
+            "💧 Ispezionare l'impianto di irrigazione per eventuali danni invernali",
+            "📦 Inventario depositi (Mappali 2673, 2674)",
+            "🌱 Ordinare i materiali organici (NPK, compost, Caolino) per la primavera",
+        ]
+        tasks = winter_tasks_it if lang == "it" else winter_tasks_en
+        wc1, wc2 = st.columns(2)
+        for i, task in enumerate(tasks):
+            with (wc1 if i % 2 == 0 else wc2):
+                st.checkbox(task, key=f"wt_{i}")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
