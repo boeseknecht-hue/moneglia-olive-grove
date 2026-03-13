@@ -577,8 +577,8 @@ with st.sidebar:
         username_input = st.text_input(T["login_user"], key="login_user_field")
         password_input = st.text_input(T["login_pass"], type="password", key="login_pass_field")
         if st.button(T["login_button"], use_container_width=True, type="primary"):
-            valid_user = st.secrets.get("username", "")
-            valid_pass = st.secrets.get("password", "")
+            valid_user = st.secrets.get("credentials", {}).get("username", "")
+            valid_pass = st.secrets.get("credentials", {}).get("password", "")
             if username_input == valid_user and password_input == valid_pass:
                 st.session_state["authenticated"] = True
                 st.rerun()
