@@ -15,6 +15,8 @@ Deploy:
 """
 
 import os
+import csv
+import pathlib
 import datetime
 import requests
 import streamlit as st
@@ -56,9 +58,15 @@ st.markdown(
         .harvest-open { background:#d4edda; border-left:5px solid #28a745; color:#155724; }
         .harvest-wait { background:#f8d7da; border-left:5px solid #dc3545; color:#721c24; }
         /* Pest risk levels */
-        .risk-low    { background:#d4edda; border-left:6px solid #28a745; color:#155724; }
-        .risk-medium { background:#fff3cd; border-left:6px solid #f0a500; color:#7a4f00; }
-        .risk-high   { background:#f8d7da; border-left:6px solid #dc3545; color:#721c24; }
+        .risk-low      { background:#d4edda; border-left:6px solid #28a745; color:#155724; }
+        .risk-medium   { background:#fff3cd; border-left:6px solid #f0a500; color:#7a4f00; }
+        .risk-high     { background:#f8d7da; border-left:6px solid #dc3545; color:#721c24; }
+        .risk-critical { background:#3d0010; border-left:6px solid #ff0040; color:#ffccd5;
+                         animation: pulse 1.4s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.75} }
+        /* Property summary bar */
+        .prop-bar { background:#f0f7f4; border:1px solid #c3ddd0; border-radius:8px;
+                    padding:8px 14px; margin-bottom:10px; font-size:0.82rem; color:#2d5a3d; }
         /* Risk status bar */
         .risk-bar-wrap {
             background:#e9ecef; border-radius:20px; height:26px;
@@ -103,9 +111,18 @@ STRUCTURES = [
     {"mappale": "2674", "tipo": "Storage Unit B",  "tipo_it": "Deposito B",           "vani": None, "mq": 58},
 ]
 
-HARVEST_START_MONTH = 10  # October
-HARVEST_START_DAY   = 15
-FROST_THRESHOLD_C   = 2.0
+HARVEST_START_MONTH  = 10  # October
+HARVEST_START_DAY    = 15
+FROST_THRESHOLD_C    = 2.0
+CRITICAL_HUMIDITY    = 60.0   # % — above this + 20-28°C → CRITICAL fly risk
+CRITICAL_TEMP_LO     = 20.0
+CRITICAL_TEMP_HI     = 28.0
+CSV_RAIN_PENALTY_MM  = 100.0  # mm in 30 days pre-harvest → -2% extraction
+
+# CSV climate log (persists in same directory as this script)
+CSV_PATH    = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "grove_climate_history.csv")
+CSV_COLUMNS = ["Date", "MaxTemp", "MinTemp", "Rainfall_mm", "Humidity_pct"]
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TRANSLATIONS
@@ -653,6 +670,86 @@ def harvest_window_open() -> bool:
     return today >= open_date
 
 
+# ── CSV climate log helpers ───────────────────────────────────────────────────
+def log_daily_weather(api_key: str) -> bool:
+    """Fetch today's current weather from OWM and append to CSV if not yet logged.
+    Uses /weather (current conditions) endpoint. Returns True if a new row was written."""
+    today_str = datetime.date.today().isoformat()
+    p = pathlib.Path(CSV_PATH)
+
+    # Skip if today already logged
+    if p.exists() and p.stat().st_size > 0:
+        with open(p, newline="") as f:
+            if any(row.get("Date") == today_str for row in csv.DictReader(f)):
+                return False
+
+    url = (
+        f"https://api.openweathermap.org/data/2.5/weather"
+        f"?lat={MONEGLIA_LAT}&lon={MONEGLIA_LON}&appid={api_key}&units=metric"
+    )
+    try:
+        r = requests.get(url, timeout=8)
+        r.raise_for_status()
+        d = r.json()
+        max_t    = round(d["main"]["temp_max"], 1)
+        min_t    = round(d["main"]["temp_min"], 1)
+        humidity = int(d["main"]["humidity"])
+        # /weather gives 1h rain; multiply by 24 as rough daily estimate
+        rain     = round(d.get("rain", {}).get("1h", 0.0) * 24, 1)
+    except Exception:
+        return False
+
+    write_header = not p.exists() or p.stat().st_size == 0
+    with open(p, "a", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
+        if write_header:
+            w.writeheader()
+        w.writerow({"Date": today_str, "MaxTemp": max_t, "MinTemp": min_t,
+                    "Rainfall_mm": rain, "Humidity_pct": humidity})
+    return True
+
+
+def load_climate_history() -> list:
+    """Return all CSV rows as list of typed dicts, newest last."""
+    p = pathlib.Path(CSV_PATH)
+    if not p.exists() or p.stat().st_size == 0:
+        return []
+    rows = []
+    with open(p, newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                rows.append({
+                    "Date":         datetime.date.fromisoformat(row["Date"]),
+                    "MaxTemp":      float(row["MaxTemp"]),
+                    "MinTemp":      float(row["MinTemp"]),
+                    "Rainfall_mm":  float(row["Rainfall_mm"]),
+                    "Humidity_pct": float(row["Humidity_pct"]),
+                })
+            except (KeyError, ValueError):
+                pass
+    return sorted(rows, key=lambda x: x["Date"])
+
+
+def get_csv_30day_rainfall(history: list, before_date: datetime.date) -> float:
+    """Sum Rainfall_mm from CSV for the 30 days ending on before_date (exclusive)."""
+    cutoff = before_date - datetime.timedelta(days=30)
+    return sum(r["Rainfall_mm"] for r in history
+               if cutoff <= r["Date"] < before_date)
+
+
+def get_csv_7day_stats(history: list) -> dict:
+    """Average temp and humidity for the last 7 calendar days in the CSV.
+    Returns dict with avg_temp, avg_humidity, n_days (or n_days=0 if no data)."""
+    cutoff = datetime.date.today() - datetime.timedelta(days=7)
+    recent = [r for r in history if r["Date"] >= cutoff]
+    if not recent:
+        return {"avg_temp": None, "avg_humidity": None, "n_days": 0}
+    avg_t = sum((r["MaxTemp"] + r["MinTemp"]) / 2 for r in recent) / len(recent)
+    avg_h = sum(r["Humidity_pct"] for r in recent) / len(recent)
+    return {"avg_temp": round(avg_t, 1), "avg_humidity": round(avg_h, 1),
+            "n_days": len(recent)}
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════════════════
@@ -722,10 +819,66 @@ with st.sidebar:
         ], key="nav_radio")
 
         st.divider()
-        st.caption(f"📍 Moneglia (GE), Liguria")
-        st.caption(f"🗺️  Foglio 13 · 4 mappali · 1.3450 ha")
-        st.caption(f"🫒 ~310 olive trees")
-        st.caption(f"🏠 Residence + 116 m² storage")
+
+        # ── Timeline Slider ───────────────────────────────────────────────────
+        st.markdown(
+            "**🗓️ " + ("Timeline / Planning" if lang == "en" else "Linea temporale") + "**"
+        )
+
+        # Build 18-month range: 12 past + current + 5 future
+        _today   = datetime.date.today().replace(day=1)
+        _options = []
+        for _i in range(-11, 7):
+            _yr = _today.year + (_today.month + _i - 1) // 12
+            _mo = (_today.month + _i - 1) % 12 + 1
+            _options.append(datetime.date(_yr, _mo, 1))
+        _labels  = [d.strftime("%b %Y") for d in _options]
+        _default = _labels.index(_today.strftime("%b %Y"))
+
+        _sel_label = st.select_slider(
+            "label_hidden",
+            options=_labels,
+            value=_labels[_default],
+            key="timeline_slider",
+            label_visibility="collapsed",
+        )
+        _sel_idx   = _labels.index(_sel_label)
+        _sel_date  = _options[_sel_idx]
+        sim_month  = _sel_date.month
+
+        # Phase badge for the selected month
+        if   3 <= sim_month <= 5:   _ph = "🌱 " + ("Spring Pruning"      if lang=="en" else "Potatura primaverile")
+        elif 6 <= sim_month <= 9:   _ph = "☀️ " + ("Summer Monitoring"   if lang=="en" else "Monitoraggio estivo")
+        elif 10 <= sim_month <= 12: _ph = "🍂 " + ("Autumn Harvest"      if lang=="en" else "Raccolta autunnale")
+        else:                       _ph = "❄️ " + ("Winter Planning"     if lang=="en" else "Pianificazione invernale")
+
+        _is_future = _sel_date > _today
+        _badge_lbl = ("🔭 Future" if lang=="en" else "🔭 Futuro") if _is_future else \
+                     ("📅 Now"    if lang=="en" else "📅 Ora")    if _sel_date == _today else \
+                     ("📜 History" if lang=="en" else "📜 Storico")
+        st.markdown(
+            f'<div style="background:#eef5f0;border:1px solid #b0d4be;border-radius:6px;'
+            f'padding:6px 10px;font-size:0.78rem;color:#1a4a2e;">'
+            f'<strong>{_badge_lbl}</strong> · {_sel_label}<br>'
+            f'<span style="font-size:0.85rem;font-weight:600;">Phase: {_ph}</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.divider()
+
+        # ── Always-visible property summary ───────────────────────────────────
+        st.markdown(
+            f'<div class="prop-bar">'
+            f'📍 <strong>Loc. Crovetta, Moneglia (GE)</strong><br>'
+            f'🗺️  Foglio 13 · 4 parcels · <strong>1.3450 ha</strong><br>'
+            f'🫒 ~310 olive trees (230/ha density)<br>'
+            f'🏠 8-room residence · 116 m² storage<br>'
+            f'⚠️  Plot 2675: <em>Semenzale Irriguo</em> — check rainfall'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
         st.divider()
         if st.button(T["logout_button"], use_container_width=True):
             st.session_state["authenticated"] = False
@@ -745,10 +898,62 @@ if not st.session_state.get("authenticated", False):
     st.stop()
 
 # ══════════════════════════════════════════════════════════════════════════════
+# AUTO-LOG DAILY WEATHER TO CSV
+# ══════════════════════════════════════════════════════════════════════════════
+_auto_api = ""
+try:
+    _auto_api = st.secrets["OWM_API_KEY"]
+except Exception:
+    pass
+if not _auto_api:
+    _auto_api = st.session_state.get("owm_key", "")
+if _auto_api:
+    log_daily_weather(_auto_api)   # silent — no spinner shown
+
+# Load full history into session state (once per session)
+if "climate_history" not in st.session_state:
+    st.session_state["climate_history"] = load_climate_history()
+climate_history = st.session_state["climate_history"]
+
+# Resolve sim_month from timeline slider (defaults to today if sidebar not yet rendered)
+sim_month = st.session_state.get("_sim_month_resolved",
+                                  datetime.date.today().month)
+# The sidebar sets sim_month as a local variable; propagate it via session state
+if "timeline_slider" in st.session_state:
+    _lbl = st.session_state["timeline_slider"]
+    try:
+        _m = datetime.datetime.strptime(_lbl, "%b %Y").month
+        sim_month = _m
+        st.session_state["_sim_month_resolved"] = _m
+    except Exception:
+        pass
+
+# ══════════════════════════════════════════════════════════════════════════════
 # HEADER
 # ══════════════════════════════════════════════════════════════════════════════
 st.title(T["app_title"])
 st.markdown(f"*{T['app_subtitle']}*")
+
+# Always-visible property summary bar
+csv_stats    = get_csv_7day_stats(climate_history)
+_log_count   = len(climate_history)
+_last_log    = climate_history[-1]["Date"].strftime("%d %b %Y") if climate_history else "—"
+_rain_30     = get_csv_30day_rainfall(
+    climate_history,
+    datetime.date(datetime.date.today().year, 10, 15)  # pre-harvest reference
+)
+
+st.markdown(
+    f'<div class="prop-bar" style="display:flex;gap:24px;flex-wrap:wrap;">'
+    f'<span>📍 <strong>Loc. Crovetta — Foglio 13</strong></span>'
+    f'<span>🗺️ 1.3450 ha · 4 parcels</span>'
+    f'<span>🫒 310 trees</span>'
+    f'<span>🏠 116 m² storage (2673+2674)</span>'
+    f'<span>📊 Climate log: <strong>{_log_count} days</strong> · last: {_last_log}</span>'
+    f'{"<span>⚠️ Plot 2675: <strong>Check irrigation</strong></span>" if sim_month in range(6,10) else ""}'
+    f'</div>',
+    unsafe_allow_html=True,
+)
 st.divider()
 
 
@@ -999,42 +1204,67 @@ elif page == T["bio_nav"]:
         week_avg_t   = sum(avg_temps) / len(avg_temps)
         is_live      = True
     else:
-        # Demo values — typical Ligurian late-summer scenario
         week_avg_t   = 22.5
         avg_humidity = 62.0
         is_live      = False
         st.info(T["bio_wx_demo"])
 
-    # ── Risk classification ───────────────────────────────────────────────────
-    if week_avg_t < 15.0 or week_avg_t > 32.0:
-        risk_level  = "low"
-        risk_pct    = 20
-        bar_color   = "#28a745"
-        bar_label   = T["bio_low"]
-        risk_why    = T["bio_low_why"]
-        css_class   = "risk-low"
-    elif 15.0 <= week_avg_t <= 20.0:
-        risk_level  = "medium"
-        risk_pct    = 55
-        bar_color   = "#f0a500"
-        bar_label   = T["bio_medium"]
-        risk_why    = T["bio_medium_why"]
-        css_class   = "risk-medium"
-    elif 20.0 < week_avg_t <= 30.0 and avg_humidity > 50.0:
-        risk_level  = "high"
-        risk_pct    = 90
-        bar_color   = "#dc3545"
-        bar_label   = T["bio_high"]
-        risk_why    = T["bio_high_why"]
-        css_class   = "risk-high"
+    # ── Combine with CSV 7-day history for enhanced accuracy ─────────────────
+    csv_week = get_csv_7day_stats(climate_history)
+    if csv_week["n_days"] >= 3:
+        # Blend forecast avg with CSV historical avg (equal weight)
+        blended_t = (week_avg_t + csv_week["avg_temp"]) / 2
+        blended_h = (avg_humidity + csv_week["avg_humidity"]) / 2
+        data_src  = f"Forecast + {csv_week['n_days']}-day CSV history"
     else:
-        # Temp in 20–30 range but humidity ≤ 50 % → medium-high
-        risk_level  = "medium"
-        risk_pct    = 68
-        bar_color   = "#f0a500"
-        bar_label   = T["bio_medium"]
-        risk_why    = T["bio_medium_why"]
-        css_class   = "risk-medium"
+        blended_t = week_avg_t
+        blended_h = avg_humidity
+        data_src  = "Forecast only (CSV < 3 days)"
+
+    # ── Risk classification — CRITICAL tier added ─────────────────────────────
+    if (CRITICAL_TEMP_LO <= blended_t <= CRITICAL_TEMP_HI
+            and blended_h > CRITICAL_HUMIDITY):
+        risk_level = "critical"
+        risk_pct   = 100
+        bar_color  = "#ff0040"
+        bar_label  = ("🔴🔴 CRITICAL RISK — Immediate Action" if lang == "en"
+                      else "🔴🔴 RISCHIO CRITICO — Azione immediata")
+        risk_why   = ("7-day blended data: avg temp {:.1f} °C, humidity {:.0f} % — "
+                      "both in peak Bactrocera oleae activity range. "
+                      "Apply traps and organic treatment immediately.").format(blended_t, blended_h) \
+                     if lang == "en" else \
+                     ("Dati 7 giorni combinati: temp media {:.1f} °C, umidità {:.0f} % — "
+                      "entrambi nell'intervallo di picco per Bactrocera oleae. "
+                      "Installare trappole e trattare immediatamente.").format(blended_t, blended_h)
+        css_class  = "risk-critical"
+    elif blended_t < 15.0 or blended_t > 32.0:
+        risk_level = "low"
+        risk_pct   = 20
+        bar_color  = "#28a745"
+        bar_label  = T["bio_low"]
+        risk_why   = T["bio_low_why"]
+        css_class  = "risk-low"
+    elif 15.0 <= blended_t <= 20.0:
+        risk_level = "medium"
+        risk_pct   = 55
+        bar_color  = "#f0a500"
+        bar_label  = T["bio_medium"]
+        risk_why   = T["bio_medium_why"]
+        css_class  = "risk-medium"
+    elif 20.0 < blended_t <= 30.0 and blended_h > 50.0:
+        risk_level = "high"
+        risk_pct   = 90
+        bar_color  = "#dc3545"
+        bar_label  = T["bio_high"]
+        risk_why   = T["bio_high_why"]
+        css_class  = "risk-high"
+    else:
+        risk_level = "medium"
+        risk_pct   = 68
+        bar_color  = "#f0a500"
+        bar_label  = T["bio_medium"]
+        risk_why   = T["bio_medium_why"]
+        css_class  = "risk-medium"
 
     # ── Status layout ─────────────────────────────────────────────────────────
     col_risk, col_meta = st.columns([2, 1])
@@ -1071,11 +1301,15 @@ elif page == T["bio_nav"]:
             )
 
     with col_meta:
-        st.subheader("📊 " + ("Weather Inputs" if lang == "en" else "Dati meteo"))
-        src = "🔴 Live" if is_live else "⚪ Demo"
-        st.metric("Source / Fonte", src)
-        st.metric("Avg Temp (7d)", f"{week_avg_t:.1f} °C")
-        st.metric("Avg Humidity", f"{avg_humidity:.0f} %")
+        st.subheader("📊 " + ("Inputs" if lang == "en" else "Dati"))
+        st.metric("Forecast Avg Temp", f"{week_avg_t:.1f} °C")
+        st.metric("Forecast Avg Humidity", f"{avg_humidity:.0f} %")
+        if csv_week["n_days"] > 0:
+            st.metric("CSV Avg Temp (7d)", f"{csv_week['avg_temp']:.1f} °C")
+            st.metric("CSV Avg Humidity (7d)", f"{csv_week['avg_humidity']:.0f} %")
+            st.metric("Blended Temp / Humidity",
+                      f"{blended_t:.1f} °C / {blended_h:.0f} %")
+        st.caption(data_src)
 
     st.divider()
 
@@ -1180,12 +1414,11 @@ elif page == T["hv_nav"]:
 
     import pandas as pd
 
-    # ── Determine current agricultural phase ──────────────────────────────────
-    today_m = datetime.date.today().month
-    if   3 <= today_m <= 5:   phase = "spring"
-    elif 6 <= today_m <= 9:   phase = "summer"
-    elif 10 <= today_m <= 12: phase = "harvest"
-    else:                     phase = "winter"   # Jan–Feb
+    # ── Determine phase from timeline slider (sim_month) ─────────────────────
+    if   3 <= sim_month <= 5:   phase = "spring"
+    elif 6 <= sim_month <= 9:   phase = "summer"
+    elif 10 <= sim_month <= 12: phase = "harvest"
+    else:                       phase = "winter"
 
     PHASE_BADGE = {
         "spring":  T["hv_phase_spring_badge"],
@@ -1409,13 +1642,39 @@ elif page == T["hv_nav"]:
 
         st.divider()
 
+        # ── Storage capacity reminder ─────────────────────────────────────────
+        st.info(
+            "🏚  **Harvest storage available:** Mappali 2673 + 2674 — **116 m² total** "
+            "(58 m² each). Ensure units are cleared and cleaned before harvest begins."
+            if lang == "en" else
+            "🏚  **Capacità di stoccaggio disponibile:** Mappali 2673 + 2674 — **116 m² totali** "
+            "(58 m² ciascuno). Assicurarsi che i depositi siano sgomberati e puliti prima della raccolta."
+        )
+
+        st.divider()
+
         # ── Section 2: Oil Extraction Model ──────────────────────────────────
         st.subheader(f"🫙 {T['hv_oil_header']}")
         st.caption(T["hv_eff_hint"])
 
+        # CSV-adjusted default: if 30-day pre-harvest rain > 100 mm → -2%
+        harvest_ref_date = datetime.date(datetime.date.today().year, 10, 15)
+        rain_30          = get_csv_30day_rainfall(climate_history, harvest_ref_date)
+        default_eff      = 14 if rain_30 > CSV_RAIN_PENALTY_MM else 16
+        penalty_active   = rain_30 > CSV_RAIN_PENALTY_MM
+
+        if penalty_active:
+            st.warning(
+                f"📉  **CSV data: {rain_30:.0f} mm rain in 30 days before Oct 15** — "
+                f"extraction efficiency default lowered to **14 %** (high fruit water content)."
+                if lang == "en" else
+                f"📉  **Dati CSV: {rain_30:.0f} mm in 30 giorni prima del 15 ottobre** — "
+                f"efficienza di estrazione predefinita ridotta al **14 %** (alto contenuto idrico)."
+            )
+
         eff_pct = st.slider(
             T["hv_eff_label"],
-            min_value=14, max_value=17, value=16, step=1,
+            min_value=14, max_value=17, value=default_eff, step=1,
             format="%d %%", key="hv_eff_slider",
         )
         eff = eff_pct / 100
