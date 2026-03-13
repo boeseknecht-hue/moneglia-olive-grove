@@ -288,6 +288,18 @@ LANG = {
         # Tasks
         "tasks_header":   "Seasonal Task Calendar",
         "tasks_note":     "Track your seasonal olive grove activities. Checkboxes persist during your session.",
+
+        # Auth
+        "login_heading":  "🔐 Login / Accesso",
+        "login_user":     "Username",
+        "login_pass":     "Password",
+        "login_button":   "Log In / Accedi",
+        "login_error":    "❌ Incorrect username or password.\nCredenziali non corrette.",
+        "logout_button":  "Log Out / Esci",
+        "welcome_title":  "🫒 Private Management Portal",
+        "welcome_sub":    "Portale di Gestione Privato",
+        "welcome_msg":    "Please log in to view data for Foglio 13.",
+        "welcome_msg_it": "Accedi per visualizzare i dati del Foglio 13.",
     },
     "it": {
         # General
@@ -466,6 +478,18 @@ LANG = {
         # Tasks
         "tasks_header":   "Calendario attività stagionali",
         "tasks_note":     "Tieni traccia delle attività stagionali del tuo uliveto.",
+
+        # Auth
+        "login_heading":  "🔐 Login / Accesso",
+        "login_user":     "Nome utente",
+        "login_pass":     "Password",
+        "login_button":   "Log In / Accedi",
+        "login_error":    "❌ Incorrect username or password.\nCredenziali non corrette.",
+        "logout_button":  "Log Out / Esci",
+        "welcome_title":  "🫒 Private Management Portal",
+        "welcome_sub":    "Portale di Gestione Privato",
+        "welcome_msg":    "Please log in to view data for Foglio 13.",
+        "welcome_msg_it": "Accedi per visualizzare i dati del Foglio 13.",
     },
 }
 
@@ -546,20 +570,53 @@ with st.sidebar:
     T = LANG[lang]
 
     st.divider()
-    page = st.radio(T["nav_label"], options=[
-        T["nav_overview"],
-        T["nav_weather"],
-        T["bio_nav"],
-        T["hv_nav"],
-        T["nav_map"],
-        T["nav_tasks"],
-    ], key="nav_radio")
 
+    # ── Authentication ─────────────────────────────────────────────────────────
+    if not st.session_state.get("authenticated", False):
+        st.markdown(f"#### {T['login_heading']}")
+        username_input = st.text_input(T["login_user"], key="login_user_field")
+        password_input = st.text_input(T["login_pass"], type="password", key="login_pass_field")
+        if st.button(T["login_button"], use_container_width=True, type="primary"):
+            valid_user = st.secrets.get("username", "")
+            valid_pass = st.secrets.get("password", "")
+            if username_input == valid_user and password_input == valid_pass:
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error(T["login_error"])
+        page = None  # not used before auth gate
+    else:
+        page = st.radio(T["nav_label"], options=[
+            T["nav_overview"],
+            T["nav_weather"],
+            T["bio_nav"],
+            T["hv_nav"],
+            T["nav_map"],
+            T["nav_tasks"],
+        ], key="nav_radio")
+
+        st.divider()
+        st.caption(f"📍 Moneglia (GE), Liguria")
+        st.caption(f"🗺️  Foglio 13 · 4 mappali · 1.3450 ha")
+        st.caption(f"🫒 ~310 olive trees")
+        st.caption(f"🏠 Residence + 116 m² storage")
+        st.divider()
+        if st.button(T["logout_button"], use_container_width=True):
+            st.session_state["authenticated"] = False
+            st.rerun()
+
+# ══════════════════════════════════════════════════════════════════════════════
+# AUTHENTICATION GATE — stop here if not logged in
+# ══════════════════════════════════════════════════════════════════════════════
+if not st.session_state.get("authenticated", False):
+    st.title(T["welcome_title"])
+    st.markdown(f"*{T['welcome_sub']}*")
     st.divider()
-    st.caption(f"📍 Moneglia (GE), Liguria")
-    st.caption(f"🗺️  Foglio 13 · 4 mappali · 1.3450 ha")
-    st.caption(f"🫒 ~310 olive trees")
-    st.caption(f"🏠 Residence + 116 m² storage")
+    st.markdown(
+        f"**{T['welcome_msg']}**  \n"
+        f"*{T['welcome_msg_it']}*"
+    )
+    st.stop()
 
 # ══════════════════════════════════════════════════════════════════════════════
 # HEADER
